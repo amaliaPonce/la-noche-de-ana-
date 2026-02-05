@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#c2185b">
+  <title>La Noche de Ana ♥</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Delius&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Decoración: corazones y estrellas de 4 puntas -->
+    <div class="hearts-bg" aria-hidden="true">
+      <span class="heart h1">♥</span><span class="heart h2">♥</span><span class="heart h3">♥</span>
+      <span class="heart h4">♥</span><span class="heart h5">♥</span><span class="heart h6">♥</span>
+      <span class="heart h7">♥</span><span class="heart h8">♥</span><span class="heart h9">♥</span>
+      <span class="heart h10">♥</span><span class="heart h11">♥</span><span class="heart h12">♥</span>
+      <span class="heart h13">♥</span><span class="heart h14">♥</span><span class="heart h15">♥</span>
+      <span class="star s1">✦</span><span class="star s2">✦</span><span class="star s3">✦</span>
+      <span class="star s4">✦</span><span class="star s5">✦</span><span class="star s6">✦</span>
+      <span class="star s7">✦</span><span class="star s8">✦</span><span class="star s9">✦</span>
+      <span class="star s10">✦</span><span class="star s11">✦</span><span class="star s12">✦</span>
+    </div>
+
+    <!-- PANTALLA HOME -->
+    <section id="home" class="screen active">
+      <div class="home-content">
+        <h1 class="app-title">La Noche de Ana</h1>
+        <p class="app-subtitle">¡Despedida de Ana! Elige tu juego</p>
+        <div class="main-buttons">
+          <button type="button" class="mode-btn cartas-btn" data-mode="cartas">
+            <span class="btn-emoji">🎴</span>
+            <span class="btn-text">Cartas</span>
+          </button>
+          <button type="button" class="mode-btn retos-btn" data-mode="retos">
+            <span class="btn-emoji">🔥</span>
+            <span class="btn-text">Retos</span>
+          </button>
+          <button type="button" class="mode-btn caos-btn" data-mode="caos">
+            <span class="btn-emoji">💣</span>
+            <span class="btn-text">Botón del Caos</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODO CARTAS -->
+    <section id="cartas-screen" class="screen">
+      <button type="button" class="back-btn" aria-label="Volver">♥ Volver</button>
+      <div class="cartas-content">
+        <h2 class="screen-title">🎴 Cartas ♥</h2>
+        <p id="cartas-hint" class="screen-hint">Elige un palo para jugar</p>
+        <div class="palos-selector">
+          <button type="button" class="palo-btn" data-palo="picante" title="Picante"><span class="palo-emoji">🔥</span><span class="palo-name">Picante</span></button>
+          <button type="button" class="palo-btn" data-palo="bebida" title="Bebida"><span class="palo-emoji">🍸</span><span class="palo-name">Bebida</span></button>
+          <button type="button" class="palo-btn" data-palo="grupal" title="Grupal"><span class="palo-emoji">👯</span><span class="palo-name">Grupal</span></button>
+          <button type="button" class="palo-btn" data-palo="verguenza" title="Vergüenza"><span class="palo-emoji">😳</span><span class="palo-name">Vergüenza</span></button>
+          <button type="button" class="palo-btn" data-palo="diversion" title="Diversión"><span class="palo-emoji">🎉</span><span class="palo-name">Diversión</span></button>
+          <button type="button" class="palo-btn" data-palo="novia" title="Novia"><span class="palo-emoji">💒</span><span class="palo-name">Novia</span></button>
+          <button type="button" class="palo-btn palo-btn-any" data-palo="cualquiera" title="Carta sorpresa"><span class="palo-emoji">🎲</span><span class="palo-name">Cualquier palo</span></button>
+        </div>
+        <div id="deck-container" class="deck-container deck-inactive">
+          <div id="card-stack" class="card-stack">
+            <div id="card-flipper" class="card-flipper">
+              <div class="card-face card-back"></div>
+              <div class="card-face card-front">
+                <span id="card-palo" class="card-palo" aria-hidden="true"></span>
+                <p id="card-text" class="card-text"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" id="otra-carta-btn" class="action-btn hidden">Otra carta</button>
+        <button type="button" id="shuffle-cards-btn" class="action-btn hidden">Barajar de nuevo</button>
+      </div>
+    </section>
+
+    <!-- MODO RETOS -->
+    <section id="retos-screen" class="screen">
+      <button type="button" class="back-btn" aria-label="Volver">♥ Volver</button>
+      <div class="retos-content">
+        <h2 class="screen-title">🔥 Retos ♥</h2>
+        <div id="reto-display" class="reto-display">
+          <p id="reto-text" class="reto-text">Toca el botón para tu primer reto</p>
+        </div>
+        <button type="button" id="nuevo-reto-btn" class="action-btn big-btn">Nuevo reto</button>
+      </div>
+    </section>
+
+    <!-- MODO BOTÓN DEL CAOS -->
+    <section id="caos-screen" class="screen">
+      <button type="button" class="back-btn" aria-label="Volver">♥ Volver</button>
+      <div class="caos-content">
+        <h2 class="screen-title">💣 Botón del Caos ♥</h2>
+        <p id="caos-result" class="caos-result"></p>
+        <div id="chaos-button-wrap" class="chaos-button-wrap">
+          <button type="button" id="chaos-btn" class="chaos-btn">
+            <span>♥ ¡APRIETA! ♥</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
