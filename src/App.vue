@@ -467,26 +467,27 @@ function vibrate() {
   justify-content: center;
   padding: 6px;
   border-radius: 18px;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .icon-badge--heart {
-  background: linear-gradient(145deg, rgba(255, 77, 166, 0.25), rgba(196, 24, 91, 0.4));
+  background: rgba(255, 77, 166, 0.15);
 }
 
 .icon-badge__img {
   display: block;
   width: 100%;
   height: 100%;
+  filter: none;
 }
 
 .icon-badge--retos {
-  background: linear-gradient(145deg, rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.1));
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .icon-badge--chaos {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(194, 24, 91, 0.3));
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .panel {
