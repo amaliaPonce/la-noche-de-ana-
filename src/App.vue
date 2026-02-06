@@ -41,7 +41,7 @@
                 class="icon-badge__img"
                 width="32"
                 height="32"
-                src="https://img.icons8.com/?size=100&id=cGRK7J78JNXm&format=png&color=000000"
+                src="https://img.icons8.com/?size=100&id=bq7s19JTs4Np&format=png&color=000000"
                 alt="Icono de copa de vino"
               />
             </div>
