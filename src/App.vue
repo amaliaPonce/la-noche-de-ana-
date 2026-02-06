@@ -98,15 +98,15 @@
           <h2>Botón del Caos</h2>
         </div>
         <div class="chaos-result-wrap">
-          <div class="icon-badge icon-badge--chaos">
-            <img
-              class="icon-badge__img"
-              width="42"
-              height="42"
-              src="https://img.icons8.com/?size=100&id=9QYXsh4FjVpx&format=png&color=000000"
-              alt="Gradient shock icon"
-            />
-          </div>
+            <div class="icon-badge icon-badge--chaos">
+              <img
+                class="icon-badge__img"
+                width="42"
+                height="42"
+                src="https://img.icons8.com/?size=100&id=umGIWK7VN6BP&format=png&color=000000"
+                alt="Icono de caos"
+              />
+            </div>
           <p class="caos-result" :class="{ show: caosResult }">{{ caosResult || 'Pulsa el botón y vibra con la acción' }}</p>
         </div>
         <div class="chaos-wrap" :class="{ pulse: chaosPulse }">
