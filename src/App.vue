@@ -13,7 +13,7 @@
         src="https://img.icons8.com/external-stickers-smashing-stocks/70/external-Love-love-stickers-smashing-stocks-55.png"
         alt="Corazón sticker"
       />
-      <p class="app-subtitle">Despedida de Ana y José · móvil friendly</p>
+      <p class="app-subtitle">Despedida de Ana y José</p>
     </header>
 
     <main class="screen-wrapper">
