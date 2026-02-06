@@ -73,11 +73,20 @@
 
       <section v-else class="panel">
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
-        <div class="panel-header">
-          <h2>Botón del Caos</h2>
-          <p>Pulsa y deja que el caos decida quién bebe, baila o abraza.</p>
+      <div class="panel-header">
+        <h2>Botón del Caos</h2>
+        <p>Pulsa y deja que el caos decida quién bebe, baila o abraza.</p>
         </div>
-        <p class="caos-result" :class="{ show: caosResult }">{{ caosResult || 'Pulsa el botón y vibra con la acción' }}</p>
+        <div class="chaos-result-wrap">
+          <img
+            width="42"
+            height="42"
+            class="chaos-icon"
+            src="https://img.icons8.com/?size=100&id=9QYXsh4FjVpx&format=png&color=000000"
+            alt="Gradient shock icon"
+          />
+          <p class="caos-result" :class="{ show: caosResult }">{{ caosResult || 'Pulsa el botón y vibra con la acción' }}</p>
+        </div>
         <div class="chaos-wrap" :class="{ pulse: chaosPulse }">
           <button type="button" class="chaos-btn" @click="triggerChaos">♥ ¡APRIETA! ♥</button>
         </div>
@@ -698,6 +707,17 @@ function vibrate() {
   text-align: center;
   color: #fff;
   font-family: inherit;
+}
+
+.chaos-result-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.chaos-icon {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
 }
 
 .chaos-wrap {
