@@ -4,6 +4,11 @@
       <span v-for="i in 12" :key="`heart-${i}`" :class="['heart', `h${i}`]">♥</span>
       <span v-for="i in 6" :key="`star-${i}`" :class="['star', `s${i}`]">✦</span>
     </div>
+    <div class="floating-icons" aria-hidden="true">
+      <img class="floating-icon floating-icon--wine" src="https://img.icons8.com/?size=100&id=bq7s19JTs4Np&format=png&color=000000" alt="" />
+      <img class="floating-icon floating-icon--retos" src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=000000" alt="" />
+      <img class="floating-icon floating-icon--chaos" src="https://img.icons8.com/?size=100&id=umGIWK7VN6BP&format=png&color=000000" alt="" />
+    </div>
 
     <header class="app-header">
       <div class="icon-badge icon-badge--heart">
@@ -25,8 +30,7 @@
           <p class="app-body">Elige un modo y deja que la noche hable: Cartas, Retos o el Botón del Caos.</p>
           <div class="mode-grid">
             <button v-for="mode in modeButtons" :key="mode.value" type="button" class="mode-btn" :class="mode.value" @click="setMode(mode.value)">
-              <span class="mode-emoji">{{ mode.emoji }}</span>
-              <span>{{ mode.label }}</span>
+              {{ mode.label }}
             </button>
           </div>
         </div>
@@ -49,10 +53,9 @@
           </div>
         </div>
         <div class="palos-grid">
-          <button v-for="palo in palos" :key="palo.value" type="button" class="palo-btn" :class="{ selected: selectedPalo === palo.value }" @click="handlePaloSelect(palo.value)">
-            <span class="palo-emoji">{{ palo.emoji }}</span>
-            <span class="palo-name">{{ palo.label }}</span>
-          </button>
+            <button v-for="palo in palos" :key="palo.value" type="button" class="palo-btn" :class="{ selected: selectedPalo === palo.value }" @click="handlePaloSelect(palo.value)">
+              <span class="palo-name">{{ palo.label }}</span>
+            </button>
         </div>
         <div class="deck-wrapper">
           <div class="deck" :class="{ 'deck--inactive': !selectedPalo }" @click="handleDeckClick">
@@ -854,6 +857,46 @@ function vibrate() {
   0% { transform: translateY(0) scale(1); opacity: 0.4; }
   50% { transform: translateY(-20px) scale(1.1); opacity: 0.7; }
   100% { transform: translateY(0) scale(1); opacity: 0.4; }
+}
+
+.floating-icons {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.floating-icon {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+  animation: floatEase 12s ease-in-out infinite;
+}
+
+.floating-icon--wine {
+  top: 10%;
+  left: 8%;
+  animation-delay: 0s;
+}
+
+.floating-icon--retos {
+  top: 45%;
+  right: 12%;
+  animation-delay: 2s;
+}
+
+.floating-icon--chaos {
+  bottom: 18%;
+  left: 22%;
+  animation-delay: 1s;
+}
+
+@keyframes floatEase {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-16px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
 }
 
 @media (min-width: 768px) {
