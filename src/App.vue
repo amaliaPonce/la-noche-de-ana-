@@ -412,6 +412,7 @@ function vibrate() {
   color: #31081a;
   display: flex;
   flex-direction: column;
+  font-family: var(--font);
 }
 
 .screen-wrapper {
@@ -435,11 +436,13 @@ function vibrate() {
   font-size: 1.8rem;
   margin-bottom: 6px;
   color: #fff;
+  font-family: inherit;
 }
 
 .panel-header p {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
 }
 
 .app-title {
@@ -476,6 +479,7 @@ function vibrate() {
   transition: transform 0.2s ease;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
+  font-family: inherit;
 }
 
 .mode-btn:hover {
@@ -512,6 +516,7 @@ function vibrate() {
   justify-content: center;
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease;
+  font-family: inherit;
 }
 
 .palo-btn.selected {
@@ -605,6 +610,7 @@ function vibrate() {
   font-size: 1rem;
   line-height: 1.5;
   color: #3d1532;
+  font-family: inherit;
 }
 
 .actions {
@@ -623,6 +629,7 @@ function vibrate() {
   color: #c2185b;
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+  font-family: inherit;
 }
 
 .action-btn.big {
@@ -644,6 +651,7 @@ function vibrate() {
   text-align: center;
   color: #3d1532;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  font-family: inherit;
 }
 
 .caos-result {
@@ -653,6 +661,7 @@ function vibrate() {
   font-size: 1.15rem;
   text-align: center;
   color: #fff;
+  font-family: inherit;
 }
 
 .chaos-wrap {
