@@ -4,6 +4,7 @@
       <span v-for="i in 12" :key="`heart-${i}`" :class="['heart', `h${i}`]">♥</span>
       <span v-for="i in 6" :key="`star-${i}`" :class="['star', `s${i}`]">✦</span>
     </div>
+    <div class="floating-bg" aria-hidden="true"></div>
     <div class="floating-icons" aria-hidden="true">
       <img class="floating-icon floating-icon--wine" src="https://img.icons8.com/?size=100&id=bq7s19JTs4Np&format=png&color=000000" alt="" />
       <img class="floating-icon floating-icon--retos" src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=000000" alt="" />
@@ -807,13 +808,21 @@ function vibrate() {
   pointer-events: none;
 }
 
+.floating-bg {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0)) , linear-gradient(135deg, rgba(255, 128, 191, 0.25), rgba(196, 24, 91, 0.35));
+  mix-blend-mode: screen;
+  z-index: -3;
+  pointer-events: none;
+}
+
 .floating-icon {
   position: absolute;
   width: 42px;
   height: 42px;
-  opacity: 0.85;
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95));
-  mix-blend-mode: screen;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 12px rgba(255, 182, 193, 0.9)) saturate(1.2);
   animation: floatEase 14s ease-in-out infinite;
 }
 
