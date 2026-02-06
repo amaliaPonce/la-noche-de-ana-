@@ -1,6 +1,6 @@
 :root {
-  --fucsia: #e91e8c;
-  --fucsia-dark: #c2185b;
+  --fucsia: #ff7ab3;
+  --fucsia-dark: #a1004c;
   --font: 'Delius', cursive;
 }
 
@@ -13,7 +13,8 @@
 body {
   font-family: var(--font);
   min-height: 100vh;
-  background: #fdbed8;
+  background: #7a003c;
+  color: #fff6ff;
 }
 
 #app {
@@ -22,10 +23,11 @@ body {
 
 .app-header {
   text-align: center;
-  padding: 24px 0 0;
+  padding: 28px 0 0;
 }
 
 .app-subtitle {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.08em;
 }

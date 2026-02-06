@@ -6,34 +6,27 @@
     </div>
     <div class="floating-bg" aria-hidden="true"></div>
     <div class="floating-icons" aria-hidden="true">
-      <img class="floating-icon floating-icon--wine" src="https://img.icons8.com/?size=100&id=bq7s19JTs4Np&format=png&color=000000" alt="" />
-      <img class="floating-icon floating-icon--retos" src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=000000" alt="" />
-      <img class="floating-icon floating-icon--chaos" src="https://img.icons8.com/?size=100&id=umGIWK7VN6BP&format=png&color=000000" alt="" />
+      <img class="floating-icon floating-icon--love" src="https://img.icons8.com/external-stickers-smashing-stocks/70/external-Love-love-stickers-smashing-stocks-55.png" alt="" />
+      <img class="floating-icon floating-icon--wine" src="https://img.icons8.com/?size=100&id=cGRK7J78JNXm&format=png&color=ffffff" alt="" />
+      <img class="floating-icon floating-icon--retos" src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=ffffff" alt="" />
+      <img class="floating-icon floating-icon--chaos" src="https://img.icons8.com/?size=100&id=umGIWK7VN6BP&format=png&color=ffffff" alt="" />
+      <img class="floating-icon floating-icon--tiny" src="https://img.icons8.com/?size=100&id=9QYXsh4FjVpx&format=png&color=ffffff" alt="" />
     </div>
 
     <header class="app-header">
-      <div class="icon-badge icon-badge--heart">
-        <img
-          class="icon-badge__img"
-          width="70"
-          height="70"
-          src="https://img.icons8.com/external-stickers-smashing-stocks/70/external-Love-love-stickers-smashing-stocks-55.png"
-          alt="Corazón sticker"
-        />
-      </div>
       <p class="app-subtitle">Despedida de Ana</p>
     </header>
 
     <main class="screen-wrapper">
       <section v-if="currentMode === 'home'" class="panel home-panel">
-        <div class="home-content">
-          <h1 class="app-title">La Noche de Ana</h1>
-          <p class="app-body">Elige un modo y deja que la noche hable: Cartas, Retos o el Botón del Caos.</p>
-          <div class="mode-grid">
-            <button v-for="mode in modeButtons" :key="mode.value" type="button" class="mode-btn" :class="mode.value" @click="setMode(mode.value)">
-              {{ mode.label }}
-            </button>
-          </div>
+          <div class="home-content">
+            <h1 class="app-title">La Noche de Ana</h1>
+            <p class="app-body">Elige Cartas, Retos o el Botón del Caos y deja que la despedida hable con picante, confesiones, baile y energía grupal.</p>
+            <div class="mode-grid">
+              <button v-for="mode in modeButtons" :key="mode.value" type="button" class="mode-btn" :class="mode.value" @click="setMode(mode.value)">
+                {{ mode.label }}
+              </button>
+            </div>
         </div>
       </section>
 
@@ -45,9 +38,10 @@
           </div>
         </div>
         <div class="palos-grid">
-            <button v-for="palo in palos" :key="palo.value" type="button" class="palo-btn" :class="{ selected: selectedPalo === palo.value }" @click="handlePaloSelect(palo.value)">
-              <span class="palo-name">{{ palo.label }}</span>
-            </button>
+          <button v-for="palo in palos" :key="palo.value" type="button" class="palo-btn" :class="{ selected: selectedPalo === palo.value }" @click="handlePaloSelect(palo.value)">
+            <span class="palo-name">{{ palo.label }}</span>
+            <span class="palo-note">{{ palo.note }}</span>
+          </button>
         </div>
         <div class="deck-wrapper">
           <div class="deck" :class="{ 'deck--inactive': !selectedPalo }" @click="handleDeckClick">
@@ -72,6 +66,43 @@
             <h2>Retos</h2>
           </div>
         </div>
+        <div class="reto-filters">
+          <div class="filter-group">
+            <p class="filter-title">Categoría</p>
+            <div class="filter-options">
+              <button
+                v-for="option in RETO_CATEGORY_OPTIONS"
+                :key="option.value"
+                type="button"
+                class="filter-btn"
+                :class="{ 'filter-btn--active': selectedRetoCategory === option.value }"
+                @click="selectedRetoCategory = option.value"
+              >
+                {{ option.label }}
+              </button>
+            </div>
+          </div>
+          <div class="filter-group">
+            <p class="filter-title">Intensidad</p>
+            <div class="filter-options">
+              <button
+                v-for="option in RETO_INTENSITY_OPTIONS"
+                :key="option.value"
+                type="button"
+                class="filter-btn"
+                :class="{ 'filter-btn--active': selectedRetoIntensity === option.value }"
+                @click="selectedRetoIntensity = option.value"
+              >
+                {{ option.label }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="reto-meta">
+          <span v-if="retoMeta" class="reto-meta__chip">{{ RETO_CATEGORY_LABELS[retoMeta.categoria] }}</span>
+          <span v-if="retoMeta" class="reto-meta__chip">{{ RETO_INTENSITY_LABELS[retoMeta.intensidad] }}</span>
+          <span class="reto-meta__status">{{ retoDeckCountLabel }}</span>
+        </div>
         <div class="reto-card" :class="{ 'reto-card--show': retoDisplay }">
           <p class="reto-card__text">{{ retoDisplay }}</p>
         </div>
@@ -95,161 +126,118 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 
 const modeButtons = [
-  { value: 'cartas', label: 'Cartas', emoji: '🎴' },
-  { value: 'retos', label: 'Retos', emoji: '🔥' },
-  { value: 'caos', label: 'Botón del Caos', emoji: '💣' }
+  { value: 'cartas', label: 'Cartas' },
+  { value: 'retos', label: 'Retos' },
+  { value: 'caos', label: 'Botón del Caos' }
 ];
 
 const palos = [
-  { value: 'picante', label: 'Picante', emoji: '🔥' },
-  { value: 'bebida', label: 'Bebida', emoji: '🍸' },
-  { value: 'grupal', label: 'Grupal', emoji: '👯' },
-  { value: 'verguenza', label: 'Vergüenza', emoji: '😳' },
-  { value: 'diversion', label: 'Diversión', emoji: '🎉' },
-  { value: 'novia', label: 'Novia', emoji: '💒' },
-  { value: 'cualquiera', label: 'Cualquier palo', emoji: '🎲' }
+  { value: 'picante', label: 'Picante', note: 'Frases sugerentes para encender miradas.' },
+  { value: 'grupal', label: 'Grupal', note: 'Acciones que abrazan al equipo.' },
+  { value: 'confesion', label: 'Confesión', note: 'Verdades tiernas o atrevidas para Ana.' },
+  { value: 'baile', label: 'Baile', note: 'Pasos sensoriales para dominar la pista.' }
 ];
 
 const PALO_LABELS = {
   picante: 'Picante',
-  bebida: 'Bebida',
   grupal: 'Grupal',
-  verguenza: 'Vergüenza',
-  diversion: 'Diversión',
-  novia: 'Novia'
+  confesion: 'Confesión',
+  baile: 'Baile'
 };
 
 const CARTAS = [
-  { palo: 'picante', texto: 'Describe tu fantasía más reciente (sin filtros).' },
-  { palo: 'picante', texto: 'Cuenta el beso más apasionado que has dado y con quién fue.' },
-  { palo: 'picante', texto: 'Nombra una parte del cuerpo que no te atrevas a besar en público.' },
-  { palo: 'picante', texto: 'Haz un striptease de 10 segundos con música imaginaria.' },
-  { palo: 'picante', texto: 'Elige a alguien y susurra al oído un piropo picante.' },
-  { palo: 'picante', texto: 'Confiesa el lugar más inusual donde te has besado.' },
-  { palo: 'picante', texto: 'Haz un reto de caricias en el aire: dibuja con la mano una zona erógena y que adivinen.' },
-  { palo: 'picante', texto: 'Recrea con palabras una escena romántica de película con la persona que tengas enfrente.' },
-  { palo: 'picante', texto: 'Quita una prenda pequeña y describe cada detalle antes de volverla a poner.' },
-  { palo: 'picante', texto: 'Cuenta qué prenda te quitarías primero en una despedida salvaje y por qué.' },
-  { palo: 'bebida', texto: 'Toma un chupito con Ana.' },
-  { palo: 'bebida', texto: 'Elige a alguien: esa persona debe hacer un chupito contigo.' },
-  { palo: 'bebida', texto: 'Di "¡Brindis por Ana!" en tres idiomas diferentes.' },
-  { palo: 'bebida', texto: 'Propón un brindis con una palabra inventada.' },
-  { palo: 'bebida', texto: 'Haz un brindis usando solo emojis (dilo en alto).' },
-  { palo: 'bebida', texto: 'Toma un chupito si nunca te has emborrachado en una despedida (si no, elige a alguien).' },
-  { palo: 'bebida', texto: 'Brinda por la persona de tu derecha y bebéis juntas.' },
-  { palo: 'bebida', texto: 'Haz un brindis dedicado a la suegra (en tono cómico).' },
-  { palo: 'bebida', texto: 'Chupito en pareja: elige a alguien y bebéis los dos.' },
-  { palo: 'grupal', texto: 'Da un abrazo a cada persona del grupo en 20 segundos.' },
-  { palo: 'grupal', texto: 'Haz una foto grupal con la pose más ridícula.' },
-  { palo: 'grupal', texto: 'Elige a dos personas: deben darse un abrazo de 10 segundos.' },
-  { palo: 'grupal', texto: 'Haz un selfie grupal con caras de susto.' },
-  { palo: 'grupal', texto: 'Da un abrazo grupal y gritad "¡Por Ana!" a la de tres.' },
-  { palo: 'grupal', texto: 'Imita a alguien del grupo hasta que lo adivinen.' },
-  { palo: 'grupal', texto: 'Di tres cumplidos seguidos a la persona de tu derecha.' },
-  { palo: 'grupal', texto: 'Da un beso en la mejilla a la persona que tengas más lejos.' },
-  { palo: 'grupal', texto: 'Elige quién debe hacer el siguiente reto.' },
-  { palo: 'verguenza', texto: 'Envía un audio de voz a alguien que no esté diciendo "Estoy en la despedida de Ana" con voz de fiesta.' },
-  { palo: 'verguenza', texto: 'Baila 30 segundos con los ojos cerrados.' },
-  { palo: 'verguenza', texto: 'Canta el estribillo de una canción de boda elegida por el grupo.' },
-  { palo: 'verguenza', texto: 'Canta "Cumpleaños feliz" pero cambiando "cumpleaños" por "despedida".' },
-  { palo: 'verguenza', texto: 'Canta una canción de amor en playback exagerado.' },
-  { palo: 'verguenza', texto: 'Di qué animal serías en una boda y por qué (y actúa como tal 10 segundos).' },
-  { palo: 'verguenza', texto: 'Haz una declaración dramática de amor a la comida o la bebida.' },
-  { palo: 'diversion', texto: 'Baila como si no hubiera mañana durante una canción.' },
-  { palo: 'diversion', texto: 'Inventa un chiste sobre bodas (puede ser malo).' },
-  { palo: 'diversion', texto: 'Baila como si tuvieras 80 años.' },
-  { palo: 'diversion', texto: 'Di la primera palabra que se te venga al pensar en "boda".' },
-  { palo: 'diversion', texto: 'Di tres cosas que adoras de las despedidas.' },
-  { palo: 'diversion', texto: 'Cuenta qué llevarías a una isla desierta (objeto + persona del grupo).' },
-  { palo: 'diversion', texto: 'Di qué superpoder tendrías en una boda.' },
-  { palo: 'diversion', texto: 'Cuenta un sueño raro que hayas tenido sobre Ana o bodas.' },
-  { palo: 'novia', texto: 'Haz un brindis dedicado a Ana en verso.' },
-  { palo: 'novia', texto: 'Cuenta qué es lo que más te gusta de Ana.' },
-  { palo: 'novia', texto: 'Haz una predicción sobre el primer año de Ana.' },
-  { palo: 'novia', texto: 'Haz un discurso de 20 segundos como si fueras la madrina.' },
-  { palo: 'novia', texto: 'Baila con Ana 30 segundos.' },
-  { palo: 'novia', texto: 'Cuenta una anécdota graciosa de Ana.' },
-  { palo: 'novia', texto: 'Elige a alguien: esa persona debe decir un piropo a Ana.' },
-  { palo: 'novia', texto: 'Haz una promesa simbólica a Ana para el día de la boda.' },
-  { palo: 'novia', texto: 'Cuenta qué harías si fueras Ana por un día.' }
+  { palo: 'picante', texto: 'Describe la fantasía más dulce con tres actos y termina con un suspiro.' },
+  { palo: 'picante', texto: 'Haz una pose suave y di “este es mi plan perfecto” con voz baja.' },
+  { palo: 'picante', texto: 'Susurra un detalle atrevido que aún no te has atrevido a compartir.' },
+  { palo: 'picante', texto: 'Cuenta el gesto más sexy que has hecho y qué lo convirtió en especial.' },
+  { palo: 'picante', texto: 'Dibuja un beso prohibido en el aire y deja que el grupo lo adivine.' },
+  { palo: 'picante', texto: 'Nombra una prenda que quisieras quitar lentamente y por qué te encanta.' },
+  { palo: 'picante', texto: 'Describe un plan de baile íntimo que sólo tú puedes imaginar.' },
+  { palo: 'picante', texto: 'Relata un momento en el que te sentiste irresistible sin decir una palabra.' },
+  { palo: 'grupal', texto: 'Todos abrazad a la persona de enfrente y digan algo bonito de Ana.' },
+  { palo: 'grupal', texto: 'Formen un círculo y compartan qué energía aporta cada una a la noche.' },
+  { palo: 'grupal', texto: 'Inventen un brindis conjunto y repítanlo con una mirada cómplice.' },
+  { palo: 'grupal', texto: 'El grupo crea una coreografía de risas de 10 segundos.' },
+  { palo: 'grupal', texto: 'Canten “Por Ana” con una palabra inventada y manos arriba.' },
+  { palo: 'grupal', texto: 'Cuéntenle a Ana una anécdota que sólo este grupo comprende.' },
+  { palo: 'grupal', texto: 'Hagan el gesto secreto de la noche y celebren con un chorrito de alegría.' },
+  { palo: 'confesion', texto: 'Confiesa qué emoción te da más nervios mirando la boda.' },
+  { palo: 'confesion', texto: 'Admite un deseo tierno que guardas para Ana.' },
+  { palo: 'confesion', texto: 'Comparte un secreto alegre sobre el grupo que nadie espere.' },
+  { palo: 'confesion', texto: 'Di una verdad suave que te hace sentir libre.' },
+  { palo: 'confesion', texto: 'Canta una línea que diga “te admiro” y explica por qué.' },
+  { palo: 'confesion', texto: 'Recuerda un instante vulnerable que unió al grupo.' },
+  { palo: 'baile', texto: 'Baila despacio mientras las demás dibujan olas con las manos.' },
+  { palo: 'baile', texto: 'Improvisa un paso con palmas y un roce suave al final.' },
+  { palo: 'baile', texto: 'Haz un giro dramático y termina con una reverencia juguetona.' },
+  { palo: 'baile', texto: 'Mueve las caderas como si el ritmo fuera tu susurro favorito.' },
+  { palo: 'baile', texto: 'Marca un paso de ocho tiempos con un guiño coqueto.' },
+  { palo: 'baile', texto: 'Propón un duelo de pisadas suaves y ciérralo con una risa.' }
 ];
 
 const RETOS = [
-  'Toma un chupito con Ana.',
-  'Cuenta el peor beso que hayas dado.',
-  'Baila en el centro del grupo durante una canción.',
-  'Imita a cada persona del grupo en 10 segundos.',
-  'Di tres mentiras y una verdad; el grupo debe adivinar la verdad.',
-  'Haz un brindis dedicado a la suegra (en tono cómico).',
-  'Envía un mensaje de voz a tu madre diciendo que estás en una despedida.',
-  'Abre TikTok y haz el primer baile que te salga.',
-  'Da un abrazo a la persona que tengas más a la izquierda.',
-  'Canta el cumpleaños feliz cambiando "cumpleaños" por "soltera".',
-  'Cuenta qué te pondrías el día de tu boda (o qué te pusiste).',
-  'Elige a alguien: esa persona bebe un chupito.',
-  'Haz una declaración de amor falsa a la bebida.',
-  'Baila con los ojos cerrados 20 segundos.',
-  'Di el primer nombre que se te venga: esa persona brinda contigo.',
-  'Cuenta una anécdota vergonzosa de Ana.',
-  'Haz una foto grupal con la pose más ridícula.',
-  'Di qué animal serías en una fiesta y actúa como tal 15 segundos.',
-  'Toma un chupito si has llorado en una boda.',
-  'Imita la voz de Ana diciendo "¡Sí, quiero!".',
-  'Propón un brindis usando solo una palabra repetida 5 veces.',
-  'Da un beso en la mejilla a tres personas diferentes.',
-  'Cuenta tu peor cita en una frase.',
-  'Baila como si tuvieras 5 años.',
-  'Elige a dos personas: deben darse la mano durante 30 segundos.',
-  'Di qué llevarías a una isla desierta (objeto + persona del grupo).',
-  'Haz un selfie con Ana con cara de susto.',
-  'Canta el estribillo de una canción de amor en playback.',
-'Cuenta un sueño raro que hayas tenido sobre Ana.',
-  'Brinda por la persona que más te haya hecho reír esta noche.',
-  'Haz una promesa simbólica a Ana para el día de la boda.',
-  'Di tres cumplidos seguidos a la persona de tu derecha.',
-  'Baila 30 segundos con Ana.',
-  'Cuenta qué superpoder tendrías en una despedida.',
-  'Elige quién hace el siguiente reto.',
-  'Toma un chupito con la persona que tengas enfrente.',
-  'Imita a alguien del grupo hasta que lo adivinen.',
-  'Di la primera palabra que se te venga al pensar en "Ana".',
-  'Haz un discurso de 15 segundos como si fueras la madrina.',
-  'Da un abrazo grupal y gritad "¡Por Ana!" a la de tres.',
-  'Cuenta qué es lo que más te gusta de Ana.',
-'Haz una predicción sobre el primer año de Ana.',
-  'Baila como si no hubiera mañana.',
-  'Di una verdad que nunca hayas dicho en público.',
-  'Elige a alguien: esa persona debe hacer un brindis a Ana.',
-  'Cuenta un secreto que nunca hayas contado en una despedida.',
-  'Haz una foto grupal con caras de susto.',
-  'Da un abrazo a cada persona del grupo en 25 segundos.',
-  'Inventa un chiste sobre bodas.',
-  'Di "Brindis por Ana" en tres idiomas.',
-  'Elige a alguien: esa persona hace un chupito contigo.',
-  'Cuenta qué es lo que más te gusta de las despedidas.',
-  'Haz un brindis con una palabra inventada.',
-  'Baila con la persona de tu izquierda 20 segundos.',
-  'Di qué llevarías a una isla (objeto + persona).',
-  'Haz un selfie grupal con la pose más divertida.',
-  'Cuenta una anécdota graciosa de Ana.',
-  'Da un beso en la mejilla a la persona que tengas más lejos.',
-  'Haz una declaración dramática de amor a la comida.',
-  'Canta una canción de amor en playback exagerado.',
-  'Cuenta qué harías si fueras Ana por un día.',
-  'Haz un cambio de prenda con alguien del grupo y presume el nuevo outfit durante 10 segundos.',
-  'Besa con ojos cerrados a la persona que elijas por 3 segundos.',
-  'Quita un accesorio y descríbelo como si fuera un tesoro prohibido antes de dárselo a alguien.',
-  'Haz un strip de labios: usa tu boca para quitar un lazo o cinta de la persona de tu derecha.',
-  'Cuenta cómo sería tu cita perfecta si la otra persona tuviera que llevarte con una sola prenda.',
-  'Reta a alguien a imitarte mientras te quitas una prenda imaginaria.',
-  'Describe con detalle una prenda que llevarías para encender la pista y luego mímala.',
-  'Haz una confesión picante y que el otro grupo vote si es verdad o mentira.',
-  'Baila con alguien sujetando solo una prenda en la mano como si fuera un micrófono.',
-  'Elige a alguien para que te dé un beso en la mejilla, pero hazlo como si fuera la escena final de una película prohibida.'
+  { texto: 'Invita a dos personas a brindar juntas con un chupito y una mirada intensa.', categoria: 'grupal', intensidad: 'medio' },
+  { texto: 'Confiesa qué acto pequeño te hace sentir más cerca de Ana.', categoria: 'confesion', intensidad: 'suave' },
+  { texto: 'Baila 20 segundos con alguien usando solo los hombros.', categoria: 'baile', intensidad: 'medio' },
+  { texto: 'Describe la escena de tu cita picante favorita en tres frases y termina con un “te provoca”.', categoria: 'picante', intensidad: 'medio' },
+  { texto: 'El grupo repite una palabra cariñosa mientras hacen un círculo sonoro.', categoria: 'grupal', intensidad: 'suave' },
+  { texto: 'Cuenta un deseo para Ana que te gustaría cumplir antes de la boda.', categoria: 'confesion', intensidad: 'medio' },
+  { texto: 'Crea un paso improvisado con palmas y dilo en voz alta.', categoria: 'baile', intensidad: 'medio' },
+  { texto: 'Dibuja con tu dedo en el aire una prenda prohibida y deja que el grupo la nombre.', categoria: 'picante', intensidad: 'medio' },
+  { texto: 'Todos cuentan un recuerdo que la noche no puede olvidar.', categoria: 'grupal', intensidad: 'medio' },
+  { texto: 'Confiesa qué emoción te sorprende cada vez que miras a Ana.', categoria: 'confesion', intensidad: 'medio' },
+  { texto: 'Baila un paso lento y di el nombre de una canción antes de girar.', categoria: 'baile', intensidad: 'medio' },
+  { texto: 'Invita a alguien a un brindis secreto con un chupito y una sonrisa tenue.', categoria: 'picante', intensidad: 'medio' },
+  { texto: 'El grupo crea un brindis donde cada persona dice algo que admira.', categoria: 'grupal', intensidad: 'suave' },
+  { texto: 'Confiesa qué palabra define tu historia con Ana.', categoria: 'confesion', intensidad: 'medio' },
+  { texto: 'Haz un paso de baile con un suspiro al final que inspire a las demás.', categoria: 'baile', intensidad: 'medio' },
+  { texto: 'Cuenta un deseo atrevido que incluirías en la luna de miel.', categoria: 'picante', intensidad: 'atrevido' },
+  { texto: 'Todas dan un aplauso con ritmo y suman una frase de agradecimiento.', categoria: 'grupal', intensidad: 'medio' },
+  { texto: 'Confiesa una emoción que da miedo admitir y termina con un brindis.', categoria: 'confesion', intensidad: 'medio' },
+  { texto: 'Baila ocho tiempos y terminen con una reverencia elegante.', categoria: 'baile', intensidad: 'medio' },
+  { texto: 'Describe un secreto sensual y deja que el grupo pregunte si es verdad.', categoria: 'picante', intensidad: 'medio' }
 ];
+
+const RETO_CATEGORY_OPTIONS = [
+  { value: 'todos', label: 'Todas' },
+  { value: 'grupal', label: 'Grupal' },
+  { value: 'confesion', label: 'Confesión' },
+  { value: 'picante', label: 'Picante' },
+  { value: 'baile', label: 'Baile' }
+];
+
+const RETO_INTENSITY_OPTIONS = [
+  { value: 'todos', label: 'Todas' },
+  { value: 'suave', label: 'Suave' },
+  { value: 'medio', label: 'Medio' },
+  { value: 'atrevido', label: 'Atrevido' }
+];
+
+const RETO_CATEGORY_LABELS = RETO_CATEGORY_OPTIONS.reduce((acc, option) => {
+  acc[option.value] = option.label;
+  return acc;
+}, {});
+
+const RETO_INTENSITY_LABELS = RETO_INTENSITY_OPTIONS.reduce((acc, option) => {
+  acc[option.value] = option.label;
+  return acc;
+}, {});
+
+const selectedRetoCategory = ref('todos');
+const selectedRetoIntensity = ref('todos');
+const retoDeck = ref([]);
+const retoMeta = ref(null);
+const deckNeedsShuffle = ref(false);
+
+const retoDeckCountLabel = computed(() => {
+  if (deckNeedsShuffle.value && retoDeck.value.length === 0) {
+    return 'Se rebaraja tras terminar el deck';
+  }
+  return `${retoDeck.value.length} reto${retoDeck.value.length === 1 ? '' : 's'} restantes`;
+});
 
 const CAOS_ACTIONS = [
   'Todas beben',
@@ -291,11 +279,9 @@ const isCardFlipped = ref(false);
 const shuffleVisible = ref(false);
 const cartasPoolByPalo = reactive({
   picante: [],
-  bebida: [],
   grupal: [],
-  verguenza: [],
-  diversion: [],
-  novia: []
+  confesion: [],
+  baile: []
 });
 const cartasPoolAll = ref([]);
 const retoDisplay = ref('Toca el botón para tu primer reto');
@@ -308,7 +294,39 @@ const cardPaloLabel = computed(() => {
   return 'Cartas';
 });
 
-const cardBody = computed(() => currentCard.value?.texto || 'Selecciona un palo y toca el mazo.');
+const cardBody = computed(() => currentCard.value?.texto || 'Selecciona Picante, Grupal, Confesión o Baile y toca el mazo.');
+
+function getFilteredRetos() {
+  return RETOS.filter((reto) => {
+    const matchesCategory = selectedRetoCategory.value === 'todos' || reto.categoria === selectedRetoCategory.value;
+    const matchesIntensity = selectedRetoIntensity.value === 'todos' || reto.intensidad === selectedRetoIntensity.value;
+    return matchesCategory && matchesIntensity;
+  });
+}
+
+function shuffleList(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function resetRetoDeck() {
+  const filtered = getFilteredRetos();
+  if (filtered.length === 0) {
+    retoDeck.value = [];
+    retoMeta.value = null;
+    retoDisplay.value = 'Sin retos para esta combinación. Cambia el filtro.';
+    deckNeedsShuffle.value = false;
+    return;
+  }
+  retoDeck.value = shuffleList(filtered);
+  deckNeedsShuffle.value = false;
+}
+
+watch([selectedRetoCategory, selectedRetoIntensity], resetRetoDeck, { immediate: true });
 
 function setMode(mode) {
   currentMode.value = mode;
@@ -398,8 +416,16 @@ function resetSelection() {
 }
 
 function nuevoReto() {
-  const index = Math.floor(Math.random() * RETOS.length);
-  retoDisplay.value = RETOS[index];
+  if (retoDeck.value.length === 0) {
+    resetRetoDeck();
+  }
+  if (retoDeck.value.length === 0) {
+    return;
+  }
+  const reto = retoDeck.value.pop();
+  retoDisplay.value = reto.texto;
+  retoMeta.value = reto;
+  deckNeedsShuffle.value = retoDeck.value.length === 0;
 }
 
 function triggerChaos() {
@@ -423,11 +449,12 @@ function vibrate() {
   position: relative;
   min-height: 100vh;
   padding-bottom: 40px;
-  background: linear-gradient(165deg, #fee7f5 0%, #f5b0d1 45%, #d60b67 100%);
-  color: #31081a;
+  background: #7a003c;
+  color: #ffeef8;
   display: flex;
   flex-direction: column;
   font-family: var(--font);
+  overflow: hidden;
 }
 
 .screen-wrapper {
@@ -436,17 +463,14 @@ function vibrate() {
 
 .app-header {
   text-align: center;
-  padding: 24px 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  padding: 28px 0 0;
 }
 
 .app-subtitle {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
   font-family: inherit;
+  margin-bottom: 12px;
 }
 
 
@@ -491,84 +515,99 @@ function vibrate() {
 }
 
 .app-title {
-  font-size: clamp(2.4rem, 8vw, 3.2rem);
+  font-size: clamp(2.6rem, 9vw, 3.5rem);
   color: #fff;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
 .app-body {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   text-align: center;
-  margin-bottom: 20px;
+  margin: 0 auto 28px;
+  max-width: 580px;
+  font-size: 1.15rem;
+  line-height: 1.6;
 }
 
 .mode-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
 }
+
 
 .mode-btn {
   border: none;
-  border-radius: 24px;
-  padding: 18px 14px;
-  font-size: 1rem;
+  border-radius: 26px;
+  padding: 22px 16px;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
   justify-content: center;
-  transition: transform 0.2s ease;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-family: inherit;
+  background: linear-gradient(145deg, #ff7ab3, #be004a);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
 }
 
 .mode-btn:hover {
-  transform: translateY(-2px) scale(1.01);
-}
-
-.mode-btn.cartas {
-  background: linear-gradient(145deg, #ff5b93, #ff1f70);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
 }
 
 .mode-btn.retos {
-  background: linear-gradient(145deg, #d60b67, #f06292);
+  background: linear-gradient(145deg, #ff5e96, #900043);
 }
 
 .mode-btn.caos {
-  background: linear-gradient(145deg, #b71c1c, #ff5252);
+  background: linear-gradient(145deg, #c81b5b, #75002c);
 }
 
 .palos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 18px;
+  max-width: 960px;
+  margin: 0 auto;
 }
 
 .palo-btn {
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.92);
-  border-radius: 18px;
-  padding: 12px;
-  font-size: 1rem;
+  border-radius: 24px;
+  padding: 20px;
+  font-size: 1.15rem;
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 6px;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease;
   font-family: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.palo-name {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.palo-note {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 160px;
 }
 
 .palo-btn.selected {
   border-color: rgba(255, 255, 255, 0.9);
-  background: linear-gradient(145deg, #ff6e9c, #ff2a75);
   color: #fff;
-  box-shadow: 0 12px 30px rgba(255, 0, 120, 0.25);
+  background: linear-gradient(145deg, #d80069, #90003b);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
 }
 
 .cancel-btn,
@@ -699,6 +738,69 @@ function vibrate() {
   font-family: inherit;
 }
 
+.reto-filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 160px;
+}
+
+.filter-title {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: transparent;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.filter-btn--active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #c2185b;
+  border-color: #fff;
+}
+
+.reto-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.reto-meta__chip {
+  background: rgba(255, 255, 255, 0.9);
+  color: #c2185b;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.reto-meta__status {
+  font-weight: 600;
+}
+
 .caos-result {
   min-height: 88px;
   margin-top: 12px;
@@ -759,7 +861,7 @@ function vibrate() {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-  z-index: -1;
+  z-index: -3;
 }
 
 .hearts-bg .heart,
@@ -804,62 +906,71 @@ function vibrate() {
 .floating-icons {
   position: fixed;
   inset: 0;
-  z-index: -2;
+  z-index: -1;
   pointer-events: none;
 }
 
 .floating-bg {
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255, 182, 193, 0.9), transparent 40%),
-    radial-gradient(circle at 70% 10%, rgba(255, 123, 205, 0.8), transparent 55%),
-    radial-gradient(circle at 80% 70%, rgba(255, 143, 190, 0.75), transparent 50%),
-    linear-gradient(135deg, rgba(255, 192, 219, 0.5), rgba(196, 24, 91, 0.6));
-  z-index: -3;
+  background-color: rgba(138, 0, 61, 0.95);
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.45);
+  z-index: -2;
   pointer-events: none;
-  opacity: 1;
-  animation: bgGlow 18s ease-in-out infinite;
-  background-size: 150% 150%;
-}
-
-@keyframes bgGlow {
-  0% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.03); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.9; }
 }
 
 .floating-icon {
   position: absolute;
-  width: 42px;
-  height: 42px;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 12px rgba(255, 182, 193, 0.9)) saturate(1.2);
-  mix-blend-mode: screen;
-  animation: floatEase 14s ease-in-out infinite;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+  animation: floatEase 16s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
-.floating-icon--wine {
-  top: 10%;
-  left: 8%;
+.floating-icon--love {
+  top: 8%;
+  left: 14%;
+  width: 48px;
+  height: 48px;
   animation-delay: 0s;
 }
 
-.floating-icon--retos {
-  top: 45%;
-  right: 12%;
+.floating-icon--wine {
+  top: 32%;
+  right: 10%;
   animation-delay: 2s;
 }
 
+.floating-icon--retos {
+  bottom: 20%;
+  left: 14%;
+  animation-delay: 5s;
+}
+
 .floating-icon--chaos {
-  bottom: 18%;
-  left: 22%;
-  animation-delay: 1s;
+  top: 58%;
+  right: 18%;
+  animation-delay: 3s;
+}
+
+.floating-icon--tiny {
+  bottom: 6%;
+  right: 25%;
+  width: 30px;
+  height: 30px;
+  animation-delay: 7s;
 }
 
 @keyframes floatEase {
   0% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-16px) scale(1.05); }
+  50% { transform: translateY(-12px) scale(1.03); }
   100% { transform: translateY(0) scale(1); }
 }
 
