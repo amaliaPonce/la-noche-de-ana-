@@ -6,13 +6,15 @@
     </div>
 
     <header class="app-header">
-      <img
-        class="app-icon"
-        width="70"
-        height="70"
-        src="https://img.icons8.com/external-stickers-smashing-stocks/70/external-Love-love-stickers-smashing-stocks-55.png"
-        alt="Corazón sticker"
-      />
+      <div class="icon-badge icon-badge--heart">
+        <img
+          class="icon-badge__img"
+          width="70"
+          height="70"
+          src="https://img.icons8.com/external-stickers-smashing-stocks/70/external-Love-love-stickers-smashing-stocks-55.png"
+          alt="Corazón sticker"
+        />
+      </div>
       <p class="app-subtitle">Despedida de Ana y José</p>
     </header>
 
@@ -62,13 +64,15 @@
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
         <div class="panel-header panel-header--retos">
           <div class="panel-header__title-row">
-            <img
-              class="panel-icon"
-              width="36"
-              height="36"
-              src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=000000"
-              alt="Icono de retazos"
-            />
+            <div class="icon-badge icon-badge--retos">
+              <img
+                class="icon-badge__img"
+                width="36"
+                height="36"
+                src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=000000"
+                alt="Icono de retazos"
+              />
+            </div>
             <h2>Retos</h2>
           </div>
           <p>Más de 60 consignas íntimas y divertidas para animar la pista.</p>
@@ -81,18 +85,20 @@
 
       <section v-else class="panel">
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
-      <div class="panel-header">
-        <h2>Botón del Caos</h2>
-        <p>Pulsa y deja que el caos decida quién bebe, baila o abraza.</p>
+        <div class="panel-header">
+          <h2>Botón del Caos</h2>
+          <p>Pulsa y deja que el caos decida quién bebe, baila o abraza.</p>
         </div>
         <div class="chaos-result-wrap">
-          <img
-            width="42"
-            height="42"
-            class="chaos-icon"
-            src="https://img.icons8.com/?size=100&id=9QYXsh4FjVpx&format=png&color=000000"
-            alt="Gradient shock icon"
-          />
+          <div class="icon-badge icon-badge--chaos">
+            <img
+              class="icon-badge__img"
+              width="42"
+              height="42"
+              src="https://img.icons8.com/?size=100&id=9QYXsh4FjVpx&format=png&color=000000"
+              alt="Gradient shock icon"
+            />
+          </div>
           <p class="caos-result" :class="{ show: caosResult }">{{ caosResult || 'Pulsa el botón y vibra con la acción' }}</p>
         </div>
         <div class="chaos-wrap" :class="{ pulse: chaosPulse }">
@@ -458,15 +464,38 @@ function vibrate() {
   gap: 6px;
 }
 
-.app-icon {
-  border-radius: 50%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-}
-
 .app-subtitle {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.85);
   font-family: inherit;
+}
+
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.icon-badge--heart {
+  background: linear-gradient(145deg, rgba(255, 77, 166, 0.25), rgba(196, 24, 91, 0.4));
+}
+
+.icon-badge__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.icon-badge--retos {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.1));
+}
+
+.icon-badge--chaos {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(194, 24, 91, 0.3));
 }
 
 .panel {
@@ -503,10 +532,6 @@ function vibrate() {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.panel-icon {
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
 }
 
 .app-title {
@@ -733,10 +758,6 @@ function vibrate() {
   gap: 12px;
   align-items: center;
   justify-content: center;
-}
-
-.chaos-icon {
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
 }
 
 .chaos-wrap {
