@@ -34,8 +34,19 @@
 
       <section v-else-if="currentMode === 'cartas'" class="panel">
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
-        <div class="panel-header">
-          <h2>Cartas</h2>
+        <div class="panel-header panel-header--cartas">
+          <div class="panel-header__title-row">
+            <div class="icon-badge icon-badge--wine">
+              <img
+                class="icon-badge__img"
+                width="32"
+                height="32"
+                src="https://img.icons8.com/?size=100&id=cGRK7J78JNXm&format=png&color=000000"
+                alt="Icono de copa de vino"
+              />
+            </div>
+            <h2>Cartas</h2>
+          </div>
         </div>
         <div class="palos-grid">
           <button v-for="palo in palos" :key="palo.value" type="button" class="palo-btn" :class="{ selected: selectedPalo === palo.value }" @click="handlePaloSelect(palo.value)">
@@ -490,6 +501,10 @@ function vibrate() {
   background: rgba(255, 255, 255, 0.35);
 }
 
+.icon-badge--wine {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 .panel {
   position: relative;
   padding: 32px 20px;
@@ -517,6 +532,10 @@ function vibrate() {
 }
 
 .panel-header--retos {
+  gap: 6px;
+}
+
+.panel-header--cartas {
   gap: 6px;
 }
 
