@@ -6,6 +6,13 @@
     </div>
 
     <header class="app-header">
+      <img
+        class="app-icon"
+        width="70"
+        height="70"
+        src="https://img.icons8.com/external-stickers-smashing-stocks/70/external-Love-love-stickers-smashing-stocks-55.png"
+        alt="Corazón sticker"
+      />
       <p class="app-subtitle">Despedida de Ana y José · móvil friendly</p>
     </header>
 
@@ -426,6 +433,26 @@ function vibrate() {
 
 .screen-wrapper {
   flex: 1;
+}
+
+.app-header {
+  text-align: center;
+  padding: 24px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-icon {
+  border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
 }
 
 .panel {
