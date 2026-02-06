@@ -40,15 +40,6 @@
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
         <div class="panel-header panel-header--cartas">
           <div class="panel-header__title-row">
-            <div class="icon-badge icon-badge--wine">
-              <img
-                class="icon-badge__img"
-                width="32"
-                height="32"
-                src="https://img.icons8.com/?size=100&id=bq7s19JTs4Np&format=png&color=000000"
-                alt="Icono de copa de vino"
-              />
-            </div>
             <h2>Cartas</h2>
           </div>
         </div>
@@ -77,15 +68,6 @@
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
         <div class="panel-header panel-header--retos">
           <div class="panel-header__title-row">
-            <div class="icon-badge icon-badge--retos">
-              <img
-                class="icon-badge__img"
-                width="36"
-                height="36"
-                src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=000000"
-                alt="Icono de retazos"
-              />
-            </div>
             <h2>Retos</h2>
           </div>
         </div>
@@ -101,15 +83,6 @@
           <h2>Botón del Caos</h2>
         </div>
         <div class="chaos-result-wrap">
-            <div class="icon-badge icon-badge--chaos">
-              <img
-                class="icon-badge__img"
-                width="42"
-                height="42"
-                src="https://img.icons8.com/?size=100&id=umGIWK7VN6BP&format=png&color=000000"
-                alt="Icono de caos"
-              />
-            </div>
           <p class="caos-result" :class="{ show: caosResult }">{{ caosResult || 'Pulsa el botón y vibra con la acción' }}</p>
         </div>
         <div class="chaos-wrap" :class="{ pulse: chaosPulse }">
@@ -475,38 +448,6 @@ function vibrate() {
   font-family: inherit;
 }
 
-.icon-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px;
-  border-radius: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.icon-badge--heart {
-  background: rgba(255, 77, 166, 0.15);
-}
-
-.icon-badge__img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: none;
-}
-
-.icon-badge--retos {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.icon-badge--chaos {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.icon-badge--wine {
-  background: rgba(255, 255, 255, 0.3);
-}
 
 .panel {
   position: relative;
