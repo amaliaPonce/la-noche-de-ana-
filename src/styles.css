@@ -1,0 +1,31 @@
+:root {
+  --fucsia: #e91e8c;
+  --fucsia-dark: #c2185b;
+  --font: 'Delius', cursive;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  min-height: 100vh;
+  background: #fdbed8;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.app-header {
+  text-align: center;
+  padding: 24px 0 0;
+}
+
+.app-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+}

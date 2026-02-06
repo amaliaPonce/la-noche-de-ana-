@@ -1,23 +1,36 @@
 # La Noche de Ana
 
-Juego interactivo para la despedida de Ana y José con tres modos: *Cartas*, *Retos* y *Botón del Caos*. El modo Cartas reparte consignas por palo (picante, bebida, grupal, vergüenza, diversión y novia) y ahora el palo picante solo contiene retos de tono más íntimo/sexual. El modo Retos mezcla ideas de acciones, confesiones y cambios de prenda, y el Botón del Caos genera frases espontáneas.
+Juego SPA creado con Vue y Vite para la despedida de Ana y José. Ofrece tres modos:
 
-## Cómo usarlo
+- **Cartas**: seleccionas un palo y tocas el mazo para sacar consignas que giran alrededor de confesiones, posturas grupales o desafíos de tono más íntimo en el palo *picante*.
+- **Retos**: pulsa *Nuevo reto* para obtener acciones que mezclan baile, confesiones y juegos con prendas.
+- **Botón del Caos**: un botón grande que genera una acción espontánea con vibración y animación.
 
-1. Abrir `index.html` en cualquier navegador moderno (no necesita servidor).
-2. En el menú inicial elegir un modo:
-   * **Cartas**: selecciona un palo y toca el mazo; el botón “Otra carta” aparece para repetir el desafío. Hay un botón “Barajar de nuevo” que vuelve a llenar el mazo de ese palo o de todos.
-   * **Retos**: pulsa “Nuevo reto” y se muestra una consigna aleatoria de la larga lista.
-   * **Botón del Caos**: pulsa el botón grande y vibrará (si el dispositivo lo permite) mientras muestra la acción.
+## Desarrollo local
 
-## Desarrollo
+1. Instala dependencias:
+   ```bash
+   npm install
+   ```
+2. Arranca el entorno de desarrollo (hot reload):
+   ```bash
+   npm run dev
+   ```
+3. Para construir una versión lista para producción:
+   ```bash
+   npm run build
+   ```
+4. Si quieres previsualizar ese build:
+   ```bash
+   npm run preview
+   ```
 
-- El único script es `app.js`, que gestiona la navegación SPA y los tres modos.
-- Los estilos están en `styles.css`, con gradients, tipografía Delius y animaciones suaves.
-- No hay dependencias externas ni bundlers; basta con editar los archivos y recargar el navegador.
+## Estructura relevante
 
-## Sugerencias para el repo
+- `src/App.vue`: todo el layout, los modos y la lógica de cartas/retos/caos.
+- `src/styles.css`: variables globales y reset básico.
+- `vite.config.js`: configuración mínima para servir la app con base relativa (`base: './'`).
 
-- Nombre sugerido: `la-noche-de-ana`.
-- Inicia el repositorio con `git init`, crea el primer commit y añade un remoto en tu cuenta.
-- Para desplegar, cualquier hosting de sitios estáticos (Vercel/Netlify) sirve: selecciona la carpeta y apunta a `index.html`.
+## Despliegue
+
+La app es estática: basta con publicar el contenido de `dist/` en cualquier hosting (Vercel, Netlify, GitHub Pages). Si usas Vercel, conecta el repo y apunta al comando `npm run build`. Para activar el favicon del corazón la app ya lo incluye en `index.html`.
