@@ -1,6 +1,6 @@
 # La Noche de Ana
 
-Juego SPA creado con Vue y Vite para la despedida de Ana y José. Ofrece tres modos:
+Juego SPA creado con Vue y Vite para la despedida de Ana. Ofrece tres modos:
 
 - **Cartas**: seleccionas un palo y tocas el mazo para sacar consignas que giran alrededor de confesiones, posturas grupales o desafíos de tono más íntimo en el palo *picante*.
 - **Retos**: pulsa *Nuevo reto* para obtener acciones que mezclan baile, confesiones y juegos con prendas.

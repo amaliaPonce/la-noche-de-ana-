@@ -15,7 +15,7 @@
           alt="Corazón sticker"
         />
       </div>
-      <p class="app-subtitle">Despedida de Ana y José</p>
+      <p class="app-subtitle">Despedida de Ana</p>
     </header>
 
     <main class="screen-wrapper">
@@ -177,10 +177,10 @@ const CARTAS = [
   { palo: 'diversion', texto: 'Di tres cosas que adoras de las despedidas.' },
   { palo: 'diversion', texto: 'Cuenta qué llevarías a una isla desierta (objeto + persona del grupo).' },
   { palo: 'diversion', texto: 'Di qué superpoder tendrías en una boda.' },
-  { palo: 'diversion', texto: 'Cuenta un sueño raro que hayas tenido sobre Ana y José o bodas.' },
+  { palo: 'diversion', texto: 'Cuenta un sueño raro que hayas tenido sobre Ana o bodas.' },
   { palo: 'novia', texto: 'Haz un brindis dedicado a Ana en verso.' },
   { palo: 'novia', texto: 'Cuenta qué es lo que más te gusta de Ana.' },
-  { palo: 'novia', texto: 'Haz una predicción sobre el primer año de Ana y José.' },
+  { palo: 'novia', texto: 'Haz una predicción sobre el primer año de Ana.' },
   { palo: 'novia', texto: 'Haz un discurso de 20 segundos como si fueras la madrina.' },
   { palo: 'novia', texto: 'Baila con Ana 30 segundos.' },
   { palo: 'novia', texto: 'Cuenta una anécdota graciosa de Ana.' },
@@ -218,7 +218,7 @@ const RETOS = [
   'Di qué llevarías a una isla desierta (objeto + persona del grupo).',
   'Haz un selfie con Ana con cara de susto.',
   'Canta el estribillo de una canción de amor en playback.',
-  'Cuenta un sueño raro que hayas tenido.',
+'Cuenta un sueño raro que hayas tenido sobre Ana.',
   'Brinda por la persona que más te haya hecho reír esta noche.',
   'Haz una promesa simbólica a Ana para el día de la boda.',
   'Di tres cumplidos seguidos a la persona de tu derecha.',
@@ -231,7 +231,7 @@ const RETOS = [
   'Haz un discurso de 15 segundos como si fueras la madrina.',
   'Da un abrazo grupal y gritad "¡Por Ana!" a la de tres.',
   'Cuenta qué es lo que más te gusta de Ana.',
-  'Haz una predicción sobre el primer año de Ana y José.',
+'Haz una predicción sobre el primer año de Ana.',
   'Baila como si no hubiera mañana.',
   'Di una verdad que nunca hayas dicho en público.',
   'Elige a alguien: esa persona debe hacer un brindis a Ana.',
