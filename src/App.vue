@@ -61,8 +61,17 @@
 
       <section v-else-if="currentMode === 'retos'" class="panel">
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
-        <div class="panel-header">
-          <h2>Retos</h2>
+        <div class="panel-header panel-header--retos">
+          <div class="panel-header__title-row">
+            <img
+              class="panel-icon"
+              width="36"
+              height="36"
+              src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=000000"
+              alt="Icono de retazos"
+            />
+            <h2>Retos</h2>
+          </div>
           <p>Más de 60 consignas íntimas y divertidas para animar la pista.</p>
         </div>
         <div class="reto-card" :class="{ 'reto-card--show': retoDisplay }">
@@ -488,6 +497,20 @@ function vibrate() {
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.85);
   font-family: inherit;
+}
+
+.panel-header--retos {
+  gap: 6px;
+}
+
+.panel-header__title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-icon {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
 }
 
 .app-title {
