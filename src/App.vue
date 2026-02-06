@@ -811,10 +811,22 @@ function vibrate() {
 .floating-bg {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0)) , linear-gradient(135deg, rgba(255, 128, 191, 0.25), rgba(196, 24, 91, 0.35));
-  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 182, 193, 0.9), transparent 40%),
+    radial-gradient(circle at 70% 10%, rgba(255, 123, 205, 0.8), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(255, 143, 190, 0.75), transparent 50%),
+    linear-gradient(135deg, rgba(255, 192, 219, 0.5), rgba(196, 24, 91, 0.6));
   z-index: -3;
   pointer-events: none;
+  opacity: 1;
+  animation: bgGlow 18s ease-in-out infinite;
+  background-size: 150% 150%;
+}
+
+@keyframes bgGlow {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.03); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
 }
 
 .floating-icon {
@@ -823,6 +835,7 @@ function vibrate() {
   height: 42px;
   opacity: 0.9;
   filter: drop-shadow(0 0 12px rgba(255, 182, 193, 0.9)) saturate(1.2);
+  mix-blend-mode: screen;
   animation: floatEase 14s ease-in-out infinite;
 }
 
