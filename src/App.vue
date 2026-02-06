@@ -36,7 +36,6 @@
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
         <div class="panel-header">
           <h2>Cartas</h2>
-          <p>{{ hintText }}</p>
         </div>
         <div class="palos-grid">
           <button v-for="palo in palos" :key="palo.value" type="button" class="palo-btn" :class="{ selected: selectedPalo === palo.value }" @click="handlePaloSelect(palo.value)">
@@ -75,7 +74,6 @@
             </div>
             <h2>Retos</h2>
           </div>
-          <p>Más de 60 consignas íntimas y divertidas para animar la pista.</p>
         </div>
         <div class="reto-card" :class="{ 'reto-card--show': retoDisplay }">
           <p class="reto-card__text">{{ retoDisplay }}</p>
@@ -87,7 +85,6 @@
         <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
         <div class="panel-header">
           <h2>Botón del Caos</h2>
-          <p>Pulsa y deja que el caos decida quién bebe, baila o abraza.</p>
         </div>
         <div class="chaos-result-wrap">
           <div class="icon-badge icon-badge--chaos">
@@ -148,15 +145,15 @@ const CARTAS = [
   { palo: 'picante', texto: 'Recrea con palabras una escena romántica de película con la persona que tengas enfrente.' },
   { palo: 'picante', texto: 'Quita una prenda pequeña y describe cada detalle antes de volverla a poner.' },
   { palo: 'picante', texto: 'Cuenta qué prenda te quitarías primero en una despedida salvaje y por qué.' },
-  { palo: 'bebida', texto: 'Toma un shot con Ana.' },
-  { palo: 'bebida', texto: 'Elige a alguien: esa persona debe hacer un shot contigo.' },
+  { palo: 'bebida', texto: 'Toma un chupito con Ana.' },
+  { palo: 'bebida', texto: 'Elige a alguien: esa persona debe hacer un chupito contigo.' },
   { palo: 'bebida', texto: 'Di "¡Brindis por Ana!" en tres idiomas diferentes.' },
   { palo: 'bebida', texto: 'Propón un brindis con una palabra inventada.' },
   { palo: 'bebida', texto: 'Haz un brindis usando solo emojis (dilo en alto).' },
-  { palo: 'bebida', texto: 'Toma un shot si nunca te has emborrachado en una despedida (si no, elige a alguien).' },
+  { palo: 'bebida', texto: 'Toma un chupito si nunca te has emborrachado en una despedida (si no, elige a alguien).' },
   { palo: 'bebida', texto: 'Brinda por la persona de tu derecha y bebéis juntas.' },
   { palo: 'bebida', texto: 'Haz un brindis dedicado a la suegra (en tono cómico).' },
-  { palo: 'bebida', texto: 'Shot en pareja: elige a alguien y bebéis los dos.' },
+  { palo: 'bebida', texto: 'Chupito en pareja: elige a alguien y bebéis los dos.' },
   { palo: 'grupal', texto: 'Da un abrazo a cada persona del grupo en 20 segundos.' },
   { palo: 'grupal', texto: 'Haz una foto grupal con la pose más ridícula.' },
   { palo: 'grupal', texto: 'Elige a dos personas: deben darse un abrazo de 10 segundos.' },
@@ -193,7 +190,7 @@ const CARTAS = [
 ];
 
 const RETOS = [
-  'Toma un shot con Ana.',
+  'Toma un chupito con Ana.',
   'Cuenta el peor beso que hayas dado.',
   'Baila en el centro del grupo durante una canción.',
   'Imita a cada persona del grupo en 10 segundos.',
@@ -204,14 +201,14 @@ const RETOS = [
   'Da un abrazo a la persona que tengas más a la izquierda.',
   'Canta el cumpleaños feliz cambiando "cumpleaños" por "soltera".',
   'Cuenta qué te pondrías el día de tu boda (o qué te pusiste).',
-  'Elige a alguien: esa persona bebe un shot.',
+  'Elige a alguien: esa persona bebe un chupito.',
   'Haz una declaración de amor falsa a la bebida.',
   'Baila con los ojos cerrados 20 segundos.',
   'Di el primer nombre que se te venga: esa persona brinda contigo.',
   'Cuenta una anécdota vergonzosa de Ana.',
   'Haz una foto grupal con la pose más ridícula.',
   'Di qué animal serías en una fiesta y actúa como tal 15 segundos.',
-  'Toma un shot si has llorado en una boda.',
+  'Toma un chupito si has llorado en una boda.',
   'Imita la voz de Ana diciendo "¡Sí, quiero!".',
   'Propón un brindis usando solo una palabra repetida 5 veces.',
   'Da un beso en la mejilla a tres personas diferentes.',
@@ -228,7 +225,7 @@ const RETOS = [
   'Baila 30 segundos con Ana.',
   'Cuenta qué superpoder tendrías en una despedida.',
   'Elige quién hace el siguiente reto.',
-  'Toma un shot con la persona que tengas enfrente.',
+  'Toma un chupito con la persona que tengas enfrente.',
   'Imita a alguien del grupo hasta que lo adivinen.',
   'Di la primera palabra que se te venga al pensar en "Ana".',
   'Haz un discurso de 15 segundos como si fueras la madrina.',
@@ -243,7 +240,7 @@ const RETOS = [
   'Da un abrazo a cada persona del grupo en 25 segundos.',
   'Inventa un chiste sobre bodas.',
   'Di "Brindis por Ana" en tres idiomas.',
-  'Elige a alguien: esa persona hace un shot contigo.',
+  'Elige a alguien: esa persona hace un chupito contigo.',
   'Cuenta qué es lo que más te gusta de las despedidas.',
   'Haz un brindis con una palabra inventada.',
   'Baila con la persona de tu izquierda 20 segundos.',
@@ -271,7 +268,7 @@ const CAOS_ACTIONS = [
   'Solo bebe Ana',
   'Cambio de asiento',
   'Abrazo grupal',
-  'Shot obligatorio',
+  'Chupito obligatorio',
   'Ana elige quién bebe',
   'Todas al unísono: "¡Por Ana!"',
   'La persona más cercana a Ana bebe',
@@ -279,18 +276,18 @@ const CAOS_ACTIONS = [
   'Abrazo en cadena (una a una)',
   'La última en reír bebe',
   'Todas dan un beso en la mejilla a Ana',
-  'Shot en parejas: elige a alguien y bebéis juntas',
+  'Chupito en parejas: elige a alguien y bebéis juntas',
   'Ana elige la siguiente acción del caos',
   'Cambio de asiento: todas una silla a la derecha',
   'Quien tenga el móvil más cerca bebe',
   'Gritad "¡Despedida!" a la de tres',
   'La persona a la izquierda de Ana bebe',
   'Todas hacéis un brindis en verso',
-  'Ana da un shot a quien ella quiera',
+  'Ana da un chupito a quien ella quiera',
   'Abrazo grupal de 10 segundos',
   'Quien no tenga las manos en la mesa bebe',
   'La más reciente en llegar bebe',
-  'Todas tomáis un shot',
+  'Todas tomáis un chupito',
   'Ana elige quién hace el siguiente reto',
   'Cambio de asiento al azar',
   'Quien tenga el anillo más bonito bebe',
@@ -316,12 +313,6 @@ const cartasPoolAll = ref([]);
 const retoDisplay = ref('Toca el botón para tu primer reto');
 const caosResult = ref('');
 const chaosPulse = ref(false);
-
-const hintText = computed(() => {
-  if (!selectedPalo.value) return 'Elige un palo para jugar';
-  if (selectedPalo.value === 'cualquiera') return 'Toca el mazo para una carta sorpresa';
-  return `Toca el mazo para sacar una carta · ${PALO_LABELS[selectedPalo.value] || selectedPalo.value}`;
-});
 
 const cardPaloLabel = computed(() => {
   if (currentCard.value) return PALO_LABELS[currentCard.value.palo] || currentCard.value.palo;
