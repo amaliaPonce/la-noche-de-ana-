@@ -809,11 +809,12 @@ function vibrate() {
 
 .floating-icon {
   position: absolute;
-  width: 36px;
-  height: 36px;
-  opacity: 0.6;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
-  animation: floatEase 12s ease-in-out infinite;
+  width: 42px;
+  height: 42px;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95));
+  mix-blend-mode: screen;
+  animation: floatEase 14s ease-in-out infinite;
 }
 
 .floating-icon--wine {
