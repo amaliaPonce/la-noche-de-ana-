@@ -54,7 +54,6 @@
           </div>
         </div>
         <div class="actions">
-          <button v-if="isCardFlipped" type="button" class="action-btn" @click.stop="handleOtraCarta">Otra carta</button>
           <button v-if="shuffleVisible" type="button" class="action-btn" @click.stop="handleShuffle">Barajar de nuevo</button>
         </div>
       </section>
@@ -377,12 +376,16 @@ function getRandomCartaFromPalo(palo) {
 }
 
 function handleDeckClick() {
+  if (!selectedPalo.value) return;
+  if (isCardFlipped.value) {
+    isCardFlipped.value = false;
+    return;
+  }
   drawCard();
 }
 
-function drawCard(force = false) {
+function drawCard() {
   if (!selectedPalo.value) return;
-  if (isCardFlipped.value && !force) return;
   const carta = getRandomCartaFromPalo(selectedPalo.value);
   if (!carta) return;
   currentCard.value = carta;
@@ -401,13 +404,6 @@ function handleShuffle() {
   currentCard.value = null;
 }
 
-function handleOtraCarta() {
-  if (!selectedPalo.value) return;
-  isCardFlipped.value = false;
-  setTimeout(() => {
-    drawCard(true);
-  }, 150);
-}
 
 function resetSelection() {
   selectedPalo.value = null;
