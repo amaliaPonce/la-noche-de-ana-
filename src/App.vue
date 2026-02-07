@@ -198,9 +198,9 @@ const decorativeSvgShapes = [
     src: new URL('./img/9.svg', import.meta.url).href,
     variant: 'glow3',
     style: {
-      bottom: '26%',
-      right: '4%',
-      transform: 'rotate(-8deg) scale(1.6)',
+      bottom: '32%',
+      right: '-1%',
+      transform: 'rotate(-8deg) scale(1.2)',
       opacity: '0.88'
     }
   },
@@ -668,7 +668,7 @@ function vibrate() {
   padding: 22px 16px;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #fff;
+  color: #3b0020;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -678,23 +678,31 @@ function vibrate() {
   font-family: var(--title-font);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: linear-gradient(145deg, #ff7ab3, #be004a);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-  max-width: 260px;
+  background: #fffdf8;
+  border: 4px solid #fde5ee;
+  box-shadow: inset 0 0 0 2px rgba(255, 0, 115, 0.6), 0 18px 30px rgba(74, 0, 40, 0.45);
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.85);
+  max-width: 220px;
   width: 100%;
 }
 
 .mode-btn:hover {
   transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 0 0 2px rgba(255, 0, 115, 0.6), 0 18px 30px rgba(80, 0, 40, 0.45);
 }
 
 .mode-btn.retos {
-  background: linear-gradient(145deg, #ff5e96, #900043);
+  border-color: rgba(255, 94, 150, 0.95);
+  color: #4f0026;
+  box-shadow: inset 0 0 0 2px rgba(255, 94, 150, 0.9), 0 15px 25px rgba(74, 0, 40, 0.45);
+  background: #fff7fb;
 }
 
 .mode-btn.caos {
-  background: linear-gradient(145deg, #c81b5b, #75002c);
+  border-color: rgba(200, 27, 91, 0.95);
+  color: #4a0024;
+  box-shadow: inset 0 0 0 2px rgba(200, 27, 91, 0.9), 0 15px 25px rgba(74, 0, 40, 0.45);
+  background: #ffeef4;
 }
 
 @media (max-width: 640px) {
@@ -705,7 +713,7 @@ function vibrate() {
   }
 
   .mode-btn {
-    width: min(230px, 85vw);
+    width: min(200px, 85vw);
     font-size: 1.05rem;
   }
 
