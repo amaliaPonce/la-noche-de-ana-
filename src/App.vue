@@ -29,32 +29,55 @@
         </div>
       </section>
 
-      <section v-else-if="currentMode === 'cartas'" class="panel">
-        <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
-        <div class="panel-header panel-header--cartas">
-          <div class="panel-header__title-row">
-            <h2>Cartas</h2>
-          </div>
-        </div>
-        <div class="palos-grid">
-          <button v-for="palo in palos" :key="palo.value" type="button" class="palo-btn" :class="{ selected: selectedPalo === palo.value }" @click="handlePaloSelect(palo.value)">
-            <span class="palo-name">{{ palo.label }}</span>
-            <span class="palo-note">{{ palo.note }}</span>
-          </button>
-        </div>
-        <div class="deck-wrapper">
-          <div class="deck" :class="{ 'deck--inactive': !selectedPalo }" @click="handleDeckClick">
-            <div class="card" :class="{ flipped: isCardFlipped }">
-              <div class="card__face card__face--back"></div>
-              <div class="card__face card__face--front">
-                <span class="card__palo">{{ cardPaloLabel }}</span>
-                <p class="card__text">{{ cardBody }}</p>
+      <section v-else-if="currentMode === 'cartas'" class="panel cartas-panel">
+        <div class="cartas-content">
+          <div class="cartas-top">
+            <button type="button" class="back-btn" @click="setMode('home')">← Volver</button>
+            <div class="panel-header panel-header--cartas cartas-header">
+              <div class="panel-header__title-row">
+                <h2 class="cartas-title">Cartas</h2>
               </div>
             </div>
           </div>
-        </div>
-        <div class="actions">
-          <button v-if="shuffleVisible" type="button" class="action-btn" @click.stop="handleShuffle">Barajar de nuevo</button>
+          <div class="cartas-grid">
+            <div class="palos-wrapper">
+              <div class="palos-grid">
+                <button
+                  v-for="palo in palos"
+                  :key="palo.value"
+                  type="button"
+                  class="palo-btn"
+                  :class="[`palo-${palo.value}`, { selected: selectedPalo === palo.value }]"
+                  @click="handlePaloSelect(palo.value)"
+                >
+                  <span class="palo-name">{{ palo.label }}</span>
+                </button>
+              </div>
+            </div>
+            <div class="deck-panel">
+              <div class="deck-wrapper">
+                <div class="deck" :class="{ 'deck--inactive': !selectedPalo }" @click="handleDeckClick">
+                  <div class="card" :class="{ flipped: isCardFlipped }">
+                    <div class="card__face card__face--back"></div>
+                    <div class="card__face card__face--front">
+                      <span class="card__palo">{{ cardPaloLabel }}</span>
+                      <p class="card__text">{{ cardBody }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="actions cartas-actions">
+            <button
+              v-if="shuffleVisible"
+              type="button"
+              class="action-btn"
+              @click.stop="handleShuffle"
+            >
+              Barajar de nuevo
+            </button>
+          </div>
         </div>
       </section>
 
@@ -258,6 +281,7 @@ const modeButtons = [
 ];
 
 const palos = [
+  { value: 'cualquiera', label: 'Todas' },
   { value: 'picante', label: 'Picante', note: 'Frases sugerentes para encender miradas.' },
   { value: 'grupal', label: 'Grupal', note: 'Acciones que abrazan al equipo.' },
   { value: 'confesion', label: 'Confesión', note: 'Verdades tiernas o atrevidas para Ana.' },
@@ -272,33 +296,126 @@ const PALO_LABELS = {
 };
 
 const CARTAS = [
-  { palo: 'picante', texto: 'Describe la fantasía más dulce con tres actos y termina con un suspiro.' },
-  { palo: 'picante', texto: 'Haz una pose suave y di “este es mi plan perfecto” con voz baja.' },
-  { palo: 'picante', texto: 'Susurra un detalle atrevido que aún no te has atrevido a compartir.' },
-  { palo: 'picante', texto: 'Cuenta el gesto más sexy que has hecho y qué lo convirtió en especial.' },
-  { palo: 'picante', texto: 'Dibuja un beso prohibido en el aire y deja que el grupo lo adivine.' },
-  { palo: 'picante', texto: 'Nombra una prenda que quisieras quitar lentamente y por qué te encanta.' },
-  { palo: 'picante', texto: 'Describe un plan de baile íntimo que sólo tú puedes imaginar.' },
-  { palo: 'picante', texto: 'Relata un momento en el que te sentiste irresistible sin decir una palabra.' },
-  { palo: 'grupal', texto: 'Todos abrazad a la persona de enfrente y digan algo bonito de Ana.' },
-  { palo: 'grupal', texto: 'Formen un círculo y compartan qué energía aporta cada una a la noche.' },
-  { palo: 'grupal', texto: 'Inventen un brindis conjunto y repítanlo con una mirada cómplice.' },
-  { palo: 'grupal', texto: 'El grupo crea una coreografía de risas de 10 segundos.' },
-  { palo: 'grupal', texto: 'Canten “Por Ana” con una palabra inventada y manos arriba.' },
-  { palo: 'grupal', texto: 'Cuéntenle a Ana una anécdota que sólo este grupo comprende.' },
-  { palo: 'grupal', texto: 'Hagan el gesto secreto de la noche y celebren con un chorrito de alegría.' },
-  { palo: 'confesion', texto: 'Confiesa qué emoción te da más nervios mirando la boda.' },
-  { palo: 'confesion', texto: 'Admite un deseo tierno que guardas para Ana.' },
-  { palo: 'confesion', texto: 'Comparte un secreto alegre sobre el grupo que nadie espere.' },
-  { palo: 'confesion', texto: 'Di una verdad suave que te hace sentir libre.' },
-  { palo: 'confesion', texto: 'Canta una línea que diga “te admiro” y explica por qué.' },
-  { palo: 'confesion', texto: 'Recuerda un instante vulnerable que unió al grupo.' },
-  { palo: 'baile', texto: 'Baila despacio mientras las demás dibujan olas con las manos.' },
-  { palo: 'baile', texto: 'Improvisa un paso con palmas y un roce suave al final.' },
-  { palo: 'baile', texto: 'Haz un giro dramático y termina con una reverencia juguetona.' },
-  { palo: 'baile', texto: 'Mueve las caderas como si el ritmo fuera tu susurro favorito.' },
-  { palo: 'baile', texto: 'Marca un paso de ocho tiempos con un guiño coqueto.' },
-  { palo: 'baile', texto: 'Propón un duelo de pisadas suaves y ciérralo con una risa.' }
+  { palo: 'picante', texto: 'Señala quién del grupo ligaría en menos de 10 minutos.' },
+  { palo: 'picante', texto: '¿Qué es lo primero que miras en alguien?' },
+  { palo: 'picante', texto: 'Cuenta tu cita más rara.' },
+  { palo: 'picante', texto: 'Inventa una frase cutre para ligar y dísela a alguien del grupo.' },
+  { palo: 'picante', texto: '¿Quién parece más inocente pero no lo es?' },
+  { palo: 'picante', texto: 'Describe tu tipo ideal en 5 palabras.' },
+  { palo: 'picante', texto: 'Di la mayor locura que harías por amor.' },
+  { palo: 'picante', texto: '¿Quién rompería más corazones aquí?' },
+  { palo: 'picante', texto: 'Cuenta un momento “tierra trágame” romántico.' },
+  { palo: 'picante', texto: '¿Flechazo o amor lento?' },
+  { palo: 'picante', texto: 'Haz tu mejor mirada seductora durante 5 segundos.' },
+  { palo: 'picante', texto: 'Puntúa del 1 al 10 tu habilidad ligando.' },
+  { palo: 'picante', texto: '¿Quién tiene más peligro después de dos copas?' },
+  { palo: 'picante', texto: 'Confiesa una red flag tuya.' },
+  { palo: 'picante', texto: '¿Te han ghosteado o has ghosteado? Cuenta.' },
+  { palo: 'picante', texto: 'Elige a alguien para un romance de película.' },
+  { palo: 'picante', texto: '¿Quién se enamora antes?' },
+  { palo: 'picante', texto: 'Di un piropo elegante a alguien.' },
+  { palo: 'picante', texto: '¿Amor de verano o para siempre?' },
+  { palo: 'picante', texto: 'Cuenta tu peor cita.' },
+  { palo: 'picante', texto: '¿Quién tendría más matches?' },
+  { palo: 'picante', texto: 'Describe tu alter ego nocturno.' },
+  { palo: 'picante', texto: '¿Qué NO soportas en una cita?' },
+  { palo: 'picante', texto: 'Elige a tu guardaespaldas del amor.' },
+  { palo: 'picante', texto: '¿Quién sería tu tentación?' },
+  { palo: 'picante', texto: 'Confiesa una indirecta que no pillaste.' },
+  { palo: 'picante', texto: 'Di algo que te derrita.' },
+  { palo: 'picante', texto: '¿Quién manda en pareja?' },
+  { palo: 'picante', texto: '¿Has stalkeado alguna vez?' },
+  { palo: 'picante', texto: 'Si tu vida amorosa fuera una peli… ¿cuál sería el título?' },
+  { palo: 'grupal', texto: 'Foto grupal haciendo caras ridículas.' },
+  { palo: 'grupal', texto: 'Inventad el grito oficial de la despedida.' },
+  { palo: 'grupal', texto: 'Brindis improvisado en 3…2…1.' },
+  { palo: 'grupal', texto: 'Elegid la banda sonora de la noche.' },
+  { palo: 'grupal', texto: 'Pose de girl band para una foto.' },
+  { palo: 'grupal', texto: 'Señalad a la más fiestera.' },
+  { palo: 'grupal', texto: 'Abrazo grupal obligatorio.' },
+  { palo: 'grupal', texto: 'Haced una selfie dramática.' },
+  { palo: 'grupal', texto: 'Elegid reina de la pista.' },
+  { palo: 'grupal', texto: 'Foto saltando.' },
+  { palo: 'grupal', texto: 'Formad un corazón alrededor de Ana.' },
+  { palo: 'grupal', texto: 'Inventad un hashtag para la noche.' },
+  { palo: 'grupal', texto: 'Haced la peor pose de influencers posible.' },
+  { palo: 'grupal', texto: 'Todas mirando a la novia → foto.' },
+  { palo: 'grupal', texto: 'Elegid el momento más esperado de la noche.' },
+  { palo: 'grupal', texto: 'Coread el nombre de Ana.' },
+  { palo: 'grupal', texto: 'Desfile improvisado.' },
+  { palo: 'grupal', texto: 'Foto como si fuerais una portada de disco.' },
+  { palo: 'grupal', texto: 'Elegid un lema del grupo.' },
+  { palo: 'grupal', texto: 'Brindis solo con una palabra cada una.' },
+  { palo: 'grupal', texto: 'Foto elegante… ahora la misma foto pero caótica.' },
+  { palo: 'grupal', texto: 'Decid algo que admiréis de Ana.' },
+  { palo: 'grupal', texto: 'Trenecito rápido 😄' },
+  { palo: 'grupal', texto: 'Selfie solo riendo.' },
+  { palo: 'grupal', texto: 'Inventad un cóctel con nombre absurdo.' },
+  { palo: 'grupal', texto: 'Elegid la más puntual (aunque sea mentira).' },
+  { palo: 'grupal', texto: 'Foto estilo alfombra roja.' },
+  { palo: 'grupal', texto: 'Juramento de amistad improvisado.' },
+  { palo: 'grupal', texto: 'Posad como superheroínas.' },
+  { palo: 'grupal', texto: 'Aplauso para la novia.' },
+  { palo: 'confesion', texto: 'Tu mayor vergüenza en público.' },
+  { palo: 'confesion', texto: 'Una manía que nadie entienda.' },
+  { palo: 'confesion', texto: 'La vez que más te reíste.' },
+  { palo: 'confesion', texto: 'Algo que te dé miedo admitir.' },
+  { palo: 'confesion', texto: 'Tu placer culpable.' },
+  { palo: 'confesion', texto: 'La peor mentira piadosa que dijiste.' },
+  { palo: 'confesion', texto: '¿Qué te hace perder la paciencia?' },
+  { palo: 'confesion', texto: 'Una locura que repetirías.' },
+  { palo: 'confesion', texto: 'Algo que muy poca gente sepa.' },
+  { palo: 'confesion', texto: 'Tu mayor drama.' },
+  { palo: 'confesion', texto: '¿Qué cambiarías de tu pasado?' },
+  { palo: 'confesion', texto: 'Un capricho absurdo.' },
+  { palo: 'confesion', texto: 'Tu recuerdo más random.' },
+  { palo: 'confesion', texto: 'Algo que siempre pospones.' },
+  { palo: 'confesion', texto: '¿Eres celosa?' },
+  { palo: 'confesion', texto: 'El plan perfecto para un domingo.' },
+  { palo: 'confesion', texto: '¿Qué te hace sentir poderosa?' },
+  { palo: 'confesion', texto: 'Una decisión impulsiva.' },
+  { palo: 'confesion', texto: 'Algo que te habría gustado hacer antes.' },
+  { palo: 'confesion', texto: 'Tu talento inútil.' },
+  { palo: 'confesion', texto: '¿Qué te saca de quicio?' },
+  { palo: 'confesion', texto: 'La peor moda que seguiste.' },
+  { palo: 'confesion', texto: 'Una vez que pensaste “por qué hice esto”.' },
+  { palo: 'confesion', texto: 'Algo que te haga reír siempre.' },
+  { palo: 'confesion', texto: 'Tu excusa más usada.' },
+  { palo: 'confesion', texto: '¿Sobrepiensas todo o nada?' },
+  { palo: 'confesion', texto: 'Un sueño pendiente.' },
+  { palo: 'confesion', texto: 'Tu mayor debilidad.' },
+  { palo: 'confesion', texto: '¿Qué no volverías a hacer jamás?' },
+  { palo: 'confesion', texto: 'Define tu vida en una palabra.' },
+  { palo: 'baile', texto: 'Baila 10 segundos sin música.' },
+  { palo: 'baile', texto: 'La novia elige tu estilo de baile.' },
+  { palo: 'baile', texto: 'Baila como si nadie mirara.' },
+  { palo: 'baile', texto: 'Improvisa tu paso prohibido.' },
+  { palo: 'baile', texto: 'Baile dramático.' },
+  { palo: 'baile', texto: 'Baila solo con los hombros.' },
+  { palo: 'baile', texto: 'Intenta bailar sexy… sin reírte 😄' },
+  { palo: 'baile', texto: 'Baila como robot.' },
+  { palo: 'baile', texto: 'Duelo de baile con quien elijas.' },
+  { palo: 'baile', texto: 'Baila en cámara lenta.' },
+  { palo: 'baile', texto: 'Copia el baile de otra persona.' },
+  { palo: 'baile', texto: 'Baila como en los 2000.' },
+  { palo: 'baile', texto: 'Paso flamenco improvisado 💃' },
+  { palo: 'baile', texto: 'Baila con actitud de diva.' },
+  { palo: 'baile', texto: 'Mini coreografía grupal.' },
+  { palo: 'baile', texto: 'Baila solo con los pies.' },
+  { palo: 'baile', texto: 'Estilo rockstar.' },
+  { palo: 'baile', texto: 'Baila exageradamente elegante.' },
+  { palo: 'baile', texto: 'Muévete sin despegar los brazos.' },
+  { palo: 'baile', texto: 'Baile telenovela.' },
+  { palo: 'baile', texto: 'Baila con cara súper seria.' },
+  { palo: 'baile', texto: 'Estilo TikTok inventado.' },
+  { palo: 'baile', texto: 'Baila como si ganaras un premio.' },
+  { palo: 'baile', texto: 'Baile ridículamente intenso.' },
+  { palo: 'baile', texto: 'Imita un baile famoso.' },
+  { palo: 'baile', texto: 'Baila señalando a la novia.' },
+  { palo: 'baile', texto: 'Estilo disco.' },
+  { palo: 'baile', texto: 'Baile caótico.' },
+  { palo: 'baile', texto: '5 segundos dando TODO.' },
+  { palo: 'baile', texto: 'Final: todas bailan con Ana.' }
 ];
 
 const RETOS = [
@@ -586,7 +703,7 @@ function vibrate() {
 
 .app-header {
   text-align: center;
-  padding: 28px 0 0;
+  padding: 48px 0 0;
 }
 
 .app-subtitle {
@@ -606,6 +723,112 @@ function vibrate() {
   gap: 20px;
 }
 
+.cartas-panel {
+  position: relative;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  font-family: var(--font);
+  padding-top: 64px;
+}
+
+.cartas-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.cartas-top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.cartas-header {
+  max-width: 420px;
+}
+
+.panel-header .cartas-title {
+  font-family: var(--title-font);
+  letter-spacing: 0.06em;
+  margin: 0;
+  padding: 0;
+  font-size: 2.1rem;
+}
+
+.cartas-intro {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 6px 0 0;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+}
+
+.cartas-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.palos-wrapper {
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+.palos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+
+.palo-btn {
+  border: 4px solid rgba(200, 27, 91, 0.95);
+  border-radius: 26px;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: #fffdf8;
+  min-height: 52px;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px rgba(200, 27, 91, 0.8), 0 12px 24px rgba(74, 0, 40, 0.35);
+  color: #3b0020;
+}
+
+.palo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 0 0 2px rgba(200, 27, 91, 0.9), 0 14px 26px rgba(74, 0, 40, 0.4);
+}
+
+.palo-name {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-family: var(--font);
+}
+
+.palo-btn.selected {
+  border-color: rgba(200, 27, 91, 1);
+  color: #3b0020;
+  background: #fff7fb;
+  box-shadow: inset 0 0 0 2px rgba(200, 27, 91, 0.9), 0 16px 28px rgba(74, 0, 40, 0.45);
+  transform: translateY(-2px);
+}
+
+.palo-cualquiera {
+  grid-column: span 2;
+}
 .home-panel {
   padding-top: 80px;
 }
@@ -726,49 +949,21 @@ function vibrate() {
   .mode-btn.caos {
     justify-self: center;
   }
-}
 
-.palos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 18px;
-  max-width: 960px;
-  margin: 0 auto;
-}
+  .cartas-grid {
+    gap: 8px;
+  }
 
-.palo-btn {
-  border-radius: 24px;
-  padding: 20px;
-  font-size: 1.15rem;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-  font-family: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.08);
-  text-align: center;
-}
+  .palos-grid {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 8px;
+  }
 
-.palo-name {
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-.palo-note {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.85);
-  max-width: 160px;
-}
-
-.palo-btn.selected {
-  border-color: rgba(255, 255, 255, 0.9);
-  color: #fff;
-  background: linear-gradient(145deg, #d80069, #90003b);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  .palo-btn {
+    padding: 8px 10px;
+    min-height: 50px;
+    font-size: 0.84rem;
+  }
 }
 
 .cancel-btn,
@@ -792,6 +987,7 @@ function vibrate() {
 }
 
 .deck-wrapper {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -805,7 +1001,7 @@ function vibrate() {
 }
 
 .deck--inactive {
-  opacity: 0.3;
+  opacity: 0.25;
   pointer-events: none;
 }
 
@@ -857,6 +1053,8 @@ function vibrate() {
   border-radius: 999px;
   background: rgba(198, 20, 87, 0.15);
   color: #c2185b;
+  font-family: var(--title-font);
+  font-weight: 700;
 }
 
 .card__text {
@@ -873,6 +1071,19 @@ function vibrate() {
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
+}
+
+.cartas-actions {
+  justify-content: center;
+}
+
+.deck-panel {
+  padding: 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .action-btn {
@@ -1126,6 +1337,15 @@ function vibrate() {
 
   .reto-card {
     min-height: 180px;
+  }
+
+  .cartas-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+  }
+
+  .palos-grid {
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
   }
 }
 </style>
