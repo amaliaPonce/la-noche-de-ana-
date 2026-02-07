@@ -1,20 +1,7 @@
 <template>
   <div class="app-shell">
-    <div class="hearts-bg" aria-hidden="true">
-      <span v-for="i in 12" :key="`heart-${i}`" :class="['heart', `h${i}`]">♥</span>
-      <span v-for="i in 6" :key="`star-${i}`" :class="['star', `s${i}`]">✦</span>
-    </div>
-    <div class="floating-bg" aria-hidden="true"></div>
-    <div class="floating-icons" aria-hidden="true">
-      <img class="floating-icon floating-icon--love" src="https://img.icons8.com/external-stickers-smashing-stocks/70/external-Love-love-stickers-smashing-stocks-55.png" alt="" />
-      <img class="floating-icon floating-icon--wine" src="https://img.icons8.com/?size=100&id=cGRK7J78JNXm&format=png&color=ffffff" alt="" />
-      <img class="floating-icon floating-icon--retos" src="https://img.icons8.com/?size=100&id=apdRmWcq7Bbr&format=png&color=ffffff" alt="" />
-      <img class="floating-icon floating-icon--chaos" src="https://img.icons8.com/?size=100&id=umGIWK7VN6BP&format=png&color=ffffff" alt="" />
-      <img class="floating-icon floating-icon--tiny" src="https://img.icons8.com/?size=100&id=9QYXsh4FjVpx&format=png&color=ffffff" alt="" />
-    </div>
-
     <header class="app-header">
-      <p class="app-subtitle">Despedida de Ana</p>
+      <p class="app-subtitle">despedida de Ana</p>
     </header>
 
     <main class="screen-wrapper">
@@ -27,6 +14,17 @@
                 {{ mode.label }}
               </button>
             </div>
+        </div>
+        <div class="decorative-svgs home-decor" aria-hidden="true">
+          <img
+            v-for="shape in decorativeSvgShapes"
+            :key="shape.id"
+            :src="shape.src"
+            :class="['decorative-svg', shape.variant]"
+            :style="shape.style"
+            alt=""
+            role="presentation"
+          />
         </div>
       </section>
 
@@ -127,6 +125,130 @@
 
 <script setup>
 import { computed, reactive, ref, watch } from 'vue';
+
+const decorativeSvgShapes = [
+  {
+    id: 'shape-1',
+    src: new URL('./img/1.svg', import.meta.url).href,
+    variant: 'glow1',
+    style: {
+      top: '-3%',
+      left: '5%',
+      transform: 'rotate(-12deg) scale(1.35)',
+      opacity: '1'
+    }
+  },
+  {
+    id: 'shape-2',
+    src: new URL('./img/2.svg', import.meta.url).href,
+    variant: 'glow2',
+    style: {
+      top: '-2%',
+      right: '30%',
+      transform: 'rotate(8deg) scale(1.05)',
+      opacity: '0.95'
+    }
+  },
+  {
+    id: 'shape-11',
+    src: new URL('./img/11.svg', import.meta.url).href,
+    variant: 'glow2',
+    style: {
+      top: '10%',
+      left: '-7%',
+      transform: 'rotate(4deg) scale(1.15)',
+      opacity: '0.9'
+    }
+  },
+  {
+    id: 'shape-3',
+    src: new URL('./img/3.svg', import.meta.url).href,
+    variant: 'glow3',
+    style: {
+      bottom: '42%',
+      left: '-4%',
+      transform: 'rotate(-4deg) scale(0.9)',
+      opacity: '0.9'
+    }
+  },
+  {
+    id: 'shape-12',
+    src: new URL('./img/12.svg', import.meta.url).href,
+    variant: 'glow4',
+    style: {
+      bottom: '2%',
+      left: '12%',
+      transform: 'rotate(-14deg) scale(1.25)',
+      opacity: '0.95'
+    }
+  },
+  {
+    id: 'shape-4',
+    src: new URL('./img/4.svg', import.meta.url).href,
+    variant: 'glow4',
+    style: {
+      bottom: '6%',
+      right: '10%',
+      transform: 'rotate(6deg) scale(1.25)',
+      opacity: '0.95'
+    }
+  },
+  {
+    id: 'shape-9',
+    src: new URL('./img/9.svg', import.meta.url).href,
+    variant: 'glow3',
+    style: {
+      bottom: '26%',
+      right: '4%',
+      transform: 'rotate(-8deg) scale(1.6)',
+      opacity: '0.88'
+    }
+  },
+  {
+    id: 'shape-14',
+    src: new URL('./img/14.svg', import.meta.url).href,
+    variant: 'glow5',
+    style: {
+      bottom: '24%',
+      right: '74%',
+      transform: 'rotate(-6deg) scale(1.5)',
+      opacity: '0.9'
+    }
+  },
+  {
+    id: 'shape-5',
+    src: new URL('./img/5.svg', import.meta.url).href,
+    variant: 'glow5',
+    style: {
+      top: '0%',
+      left: '64%',
+      transform: 'rotate(10deg) scale(1)',
+      opacity: '0.95'
+    }
+  },
+  {
+    id: 'shape-13',
+    src: new URL('./img/13.svg', import.meta.url).href,
+    variant: 'glow1',
+    style: {
+      top: '38%',
+      right: '-5%',
+      transform: 'rotate(40deg) scale(1)',
+      opacity: '0.9'
+    }
+  },
+  {
+    id: 'shape-6',
+    src: new URL('./img/6.svg', import.meta.url).href,
+    variant: 'glow6',
+    style: {
+      top: '8%',
+      right: '-6%',
+      transform: 'rotate(18deg) scale(1.35)',
+      opacity: '0.9'
+    }
+  }
+];
 
 const modeButtons = [
   { value: 'cartas', label: 'Cartas' },
@@ -534,6 +656,9 @@ function vibrate() {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 18px;
+  justify-items: center;
+  width: min(960px, 100%);
+  margin: 0 auto;
 }
 
 
@@ -550,8 +675,13 @@ function vibrate() {
   justify-content: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-family: inherit;
+  font-family: var(--title-font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   background: linear-gradient(145deg, #ff7ab3, #be004a);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  max-width: 260px;
+  width: 100%;
 }
 
 .mode-btn:hover {
@@ -565,6 +695,23 @@ function vibrate() {
 
 .mode-btn.caos {
   background: linear-gradient(145deg, #c81b5b, #75002c);
+}
+
+@media (max-width: 640px) {
+  .mode-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .mode-btn {
+    width: min(230px, 85vw);
+    font-size: 1.05rem;
+  }
+
+  .mode-btn.caos {
+    justify-self: center;
+  }
 }
 
 .palos-grid {
@@ -615,9 +762,19 @@ function vibrate() {
   border: none;
   background: transparent;
   color: #fff;
-  font-size: 1rem;
   padding: 0;
   cursor: pointer;
+}
+
+.back-btn {
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  font-family: inherit;
+  line-height: 1.2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .deck-wrapper {
@@ -721,6 +878,8 @@ function vibrate() {
   max-width: 360px;
   background: linear-gradient(145deg, #f06292, #d60b67);
   color: #fff;
+  font-size: 1.45rem;
+  padding: 20px 28px;
 }
 
 .reto-card {
@@ -856,68 +1015,36 @@ function vibrate() {
   }
 }
 
-.hearts-bg {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
+.home-panel {
   overflow: hidden;
-  z-index: -3;
 }
 
-.hearts-bg .heart,
-.hearts-bg .star {
+.home-content {
+  position: relative;
+  z-index: 1;
+}
+
+.decorative-svgs {
   position: absolute;
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.6);
-  animation: float 8s ease-in-out infinite;
-}
-
-.hearts-bg .star {
-  color: rgba(255, 255, 255, 0.4);
-  animation-duration: 6s;
-}
-
-.hearts-bg .h1 { top: 10%; left: 8%; }
-.hearts-bg .h2 { top: 35%; left: 30%; }
-.hearts-bg .h3 { top: 75%; left: 18%; }
-.hearts-bg .h4 { top: 20%; right: 12%; }
-.hearts-bg .h5 { bottom: 10%; right: 18%; }
-.hearts-bg .h6 { bottom: 24%; left: 40%; }
-.hearts-bg .h7 { bottom: 40%; right: 6%; }
-.hearts-bg .h8 { top: 60%; right: 30%; }
-.hearts-bg .h9 { top: 50%; left: 10%; }
-.hearts-bg .h10 { bottom: 5%; left: 50%; }
-.hearts-bg .h11 { bottom: 20%; right: 45%; }
-.hearts-bg .h12 { top: 5%; right: 5%; }
-
-.hearts-bg .s1 { top: 25%; left: 15%; }
-.hearts-bg .s2 { top: 45%; right: 35%; }
-.hearts-bg .s3 { bottom: 30%; left: 28%; }
-.hearts-bg .s4 { bottom: 10%; right: 38%; }
-.hearts-bg .s5 { top: 18%; left: 55%; }
-.hearts-bg .s6 { bottom: 45%; right: 12%; }
-
-@keyframes float {
-  0% { transform: translateY(0) scale(1); opacity: 0.4; }
-  50% { transform: translateY(-20px) scale(1.1); opacity: 0.7; }
-  100% { transform: translateY(0) scale(1); opacity: 0.4; }
-}
-
-.floating-icons {
-  position: fixed;
   inset: 0;
-  z-index: -1;
   pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
 }
 
-.floating-bg {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(138, 0, 61, 0.95);
-  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.45);
-  z-index: -2;
-  pointer-events: none;
+.decorative-svg {
+  position: absolute;
+  width: clamp(110px, 15vw, 240px);
+  top: var(--svg-top, auto);
+  left: var(--svg-left, auto);
+  right: var(--svg-right, auto);
+  bottom: var(--svg-bottom, auto);
+  opacity: var(--svg-opacity, 0.95);
+  filter: drop-shadow(0 0 35px rgba(0, 0, 0, 0.8));
+  transform: rotate(var(--svg-rotate, 0deg)) scale(var(--svg-scale, 1));
+  transition: transform 0.6s ease, opacity 0.6s ease;
 }
+
 
 .floating-icon {
   position: absolute;

@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:ital,wght@0,200..900;1,200..900&display=swap');
+
 :root {
   --fucsia: #ff7ab3;
   --fucsia-dark: #a1004c;
   --font: 'Delius', cursive;
+  --title-font: 'Zalando Sans Expanded', 'Delius', cursive;
 }
 
 * {
@@ -29,5 +32,12 @@ body {
 .app-subtitle {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.95);
-  letter-spacing: 0.08em;
+  font-family: var(--title-font);
+  letter-spacing: 0.16em;
+}
+
+.app-title,
+.panel-header h2 {
+  font-family: var(--title-font);
+  letter-spacing: 0.1em;
 }
