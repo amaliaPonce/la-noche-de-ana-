@@ -9,6 +9,7 @@
           <div class="home-content">
             <h1 class="app-title">La Noche de Ana</h1>
             <p class="app-body">Elige Cartas, Retos o el Botón del Caos.</p>
+            <p class="home-note">aqui una frase para ana.</p>
             <div class="mode-grid">
               <button v-for="mode in modeButtons" :key="mode.value" type="button" class="mode-btn" :class="mode.value" @click="setMode(mode.value)">
                 {{ mode.label }}
@@ -154,7 +155,7 @@ const decorativeSvgShapes = [
     src: new URL('./img/11.svg', import.meta.url).href,
     variant: 'glow2',
     style: {
-      top: '10%',
+      top: '11%',
       left: '-7%',
       transform: 'rotate(4deg) scale(1.15)',
       opacity: '0.9'
@@ -199,8 +200,8 @@ const decorativeSvgShapes = [
     variant: 'glow3',
     style: {
       bottom: '32%',
-      right: '-1%',
-      transform: 'rotate(-8deg) scale(1.2)',
+      right: '-4%',
+      transform: 'rotate(-20deg) scale(1.2)',
       opacity: '0.88'
     }
   },
@@ -650,6 +651,16 @@ function vibrate() {
   max-width: 580px;
   font-size: 1.15rem;
   line-height: 1.6;
+}
+
+.home-note {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .mode-grid {
