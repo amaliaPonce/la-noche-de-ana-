@@ -8,7 +8,7 @@
       <section v-if="currentMode === 'home'" class="panel home-panel">
           <div class="home-content">
             <h1 class="app-title">La Noche de Ana</h1>
-            <p class="app-body">Elige Cartas, Retos o el Botón del Caos y deja que la despedida hable con picante, confesiones, baile y energía grupal.</p>
+            <p class="app-body">Elige Cartas, Retos o el Botón del Caos.</p>
             <div class="mode-grid">
               <button v-for="mode in modeButtons" :key="mode.value" type="button" class="mode-btn" :class="mode.value" @click="setMode(mode.value)">
                 {{ mode.label }}
@@ -661,7 +661,6 @@ function vibrate() {
   margin: 0 auto;
 }
 
-
 .mode-btn {
   border: none;
   border-radius: 26px;
@@ -679,8 +678,8 @@ function vibrate() {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background: #fffdf8;
-  border: 4px solid #fde5ee;
-  box-shadow: inset 0 0 0 2px rgba(255, 0, 115, 0.6), 0 18px 30px rgba(74, 0, 40, 0.45);
+  border: 4px solid rgba(200, 27, 91, 0.95);
+  box-shadow: inset 0 0 0 2px rgba(200, 27, 91, 0.8), 0 18px 30px rgba(74, 0, 40, 0.45);
   text-shadow: 0 2px 0 rgba(255, 255, 255, 0.85);
   max-width: 220px;
   width: 100%;
@@ -688,20 +687,16 @@ function vibrate() {
 
 .mode-btn:hover {
   transform: translateY(-3px) scale(1.01);
-  box-shadow: inset 0 0 0 2px rgba(255, 0, 115, 0.6), 0 18px 30px rgba(80, 0, 40, 0.45);
+  box-shadow: inset 0 0 0 2px rgba(200, 27, 91, 0.9), 0 18px 30px rgba(74, 0, 40, 0.45);
 }
 
 .mode-btn.retos {
-  border-color: rgba(255, 94, 150, 0.95);
   color: #4f0026;
-  box-shadow: inset 0 0 0 2px rgba(255, 94, 150, 0.9), 0 15px 25px rgba(74, 0, 40, 0.45);
   background: #fff7fb;
 }
 
 .mode-btn.caos {
-  border-color: rgba(200, 27, 91, 0.95);
   color: #4a0024;
-  box-shadow: inset 0 0 0 2px rgba(200, 27, 91, 0.9), 0 15px 25px rgba(74, 0, 40, 0.45);
   background: #ffeef4;
 }
 
