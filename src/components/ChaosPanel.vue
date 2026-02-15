@@ -77,7 +77,8 @@ defineEmits(['back']);
 .chaos-panel__body {
   position: relative;
   z-index: 1;
-  background: rgba(45, 0, 30, 0.4);
+  /* background: rgba(45, 0, 30, 0.4); - Removed to make full black */
+  background: transparent;
   border-radius: 28px;
   padding: 30px 24px;
   display: flex;
@@ -85,8 +86,8 @@ defineEmits(['back']);
   gap: 30px;
   min-height: 400px;
   justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  /* border: 1px solid rgba(255, 255, 255, 0.05); - Removed border */
+  /* box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); - Removed shadow */
 }
 
 /* --- Resultado (Tarjeta) --- */

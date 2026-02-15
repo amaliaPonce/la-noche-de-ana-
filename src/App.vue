@@ -1,5 +1,5 @@
 <template>
-  <div class="app-shell">
+  <div class="app-shell" :class="{ 'is-chaos': currentMode === 'caos' }">
     <header class="app-header">
       <p class="app-subtitle">despedida de Ana</p>
     </header>
@@ -52,6 +52,11 @@ function setMode(mode) {
   flex-direction: column;
   font-family: var(--font);
   overflow: hidden;
+  transition: background-color 0.5s ease;
+}
+
+.app-shell.is-chaos {
+  background: #000000;
 }
 
 .screen-wrapper {
