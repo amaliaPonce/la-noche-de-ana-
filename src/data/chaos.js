@@ -1,0 +1,22 @@
+export const CHAOS_CHALLENGES = [
+  'Confiesa: ¿Cuál es el peor regalo que te ha hecho tu futuro marido?',
+  'Imita cómo se pone tu suegra cuando algo no le gusta.',
+  'Envíale un audio a tu prometido gritando "¡NO ME CASO!" y luego di que es broma.',
+  'Di tres cosas que NO echarás de menos de la soltería.',
+  'Baila el "baile de la novia borracha" durante 30 segundos.',
+  'Propón un brindis por tus ex... y explica por qué están en el pasado.',
+  'Elige a una amiga para que te retoque el maquillaje (ojos cerrados).',
+  'Grita "¡ME CASO Y NO ESTOY LOCA!" a pleno pulmón.',
+  'Di cuál es la manía de tu novio que más te saca de quicio.',
+  'Hazte una foto con el desconocido más guapo que veas.',
+  'Demuestra cómo caminarás hacia el altar... pero a cámara lenta y haciendo muecas.',
+  'Di el nombre de quien crees que será la próxima en casarse.',
+  'Mándale un mensaje a tu madre diciendo "He perdido el anillo" (luego acláralo).',
+  'Invéntate un voto matrimonial absurdo y recítalo muy seria.',
+  'Deja que tus amigas elijan tu próxima bebida (y bébetela entera).',
+  'Finge que estás en el altar y di "sí, quiero" con tres acentos diferentes.',
+  'Cuéntanos el momento más vergonzoso que has vivido con tu pareja.',
+  'Di qué es lo que más te pone nerviosa de la boda.',
+  'Dale un beso en la mejilla a la primera persona que pase.',
+  'Haz una predicción: ¿quién la liará más en la boda?'
+];
