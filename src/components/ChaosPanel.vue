@@ -4,9 +4,17 @@
     <div class="panel-header">
       <h2>EL CAOS DE ANA</h2>
     </div>
+
+    <div class="mision-meta" v-if="misionActual">
+      <span class="mision-meta__chip">{{ NIVEL_LABELS[misionActual.nivel] }}</span>
+      <span class="mision-meta__emoji">{{ NIVEL_EMOJIS[misionActual.nivel] }}</span>
+    </div>
+
     <div class="chaos-panel__body">
-      <div class="chaos-result-wrap" :class="{ 'has-result': caosResult }">
-        <p class="caos-result" :key="caosResult">{{ caosResult || 'Pulsa el botón si te atreves' }}</p>
+      <div class="chaos-result-wrap" :class="{ 'has-result': misionActual }">
+        <p class="caos-result" :key="misionActual?.id || 'empty'">
+          {{ misionActual?.texto || 'Pulsa el botón si te atreves' }}
+        </p>
       </div>
       <div class="chaos-wrap">
         <button 
@@ -15,7 +23,7 @@
           :class="{ 'is-active': chaosPulse }" 
           @click="triggerChaos"
         >
-          <span class="chaos-btn__title">EL CAOS DE ANA</span>
+          <span class="chaos-btn__title">{{ misionDeck.length === 0 ? 'Barajar de nuevo' : 'Nueva misión' }}</span>
           <span class="chaos-btn__subtitle">DALE CAÑA</span>
         </button>
       </div>
@@ -25,27 +33,29 @@
 
 <script setup>
 import { ref } from 'vue';
-import { CHAOS_CHALLENGES } from '../data/chaos.js';
+import { NIVEL_LABELS, NIVEL_EMOJIS, getMisionesShuffled } from '../data/misiones.js';
 
-const caosResult = ref('');
+const misionDeck = ref([]);
+const misionActual = ref(null);
 const chaosPulse = ref(false);
 
+function resetDeck() {
+  misionDeck.value = getMisionesShuffled(null);
+  misionActual.value = null;
+}
+
 function triggerChaos() {
-  // Generar reto aleatorio
-  const nuevoReto = CHAOS_CHALLENGES[Math.floor(Math.random() * CHAOS_CHALLENGES.length)];
-  
-  // Pequeño hack para reiniciar la animación si sale el mismo reto (poco probable pero posible)
-  if (caosResult.value === nuevoReto) {
-    caosResult.value = '';
-    setTimeout(() => { caosResult.value = nuevoReto; }, 10);
-  } else {
-    caosResult.value = nuevoReto;
+  if (misionDeck.value.length === 0) {
+    resetDeck();
   }
 
-  // Activar animación del botón
+  if (misionDeck.value.length === 0) return;
+
   chaosPulse.value = true;
-  
+
   setTimeout(() => {
+    const mision = misionDeck.value.pop();
+    misionActual.value = mision;
     chaosPulse.value = false;
   }, 300);
 }
@@ -66,6 +76,34 @@ defineEmits(['back']);
   position: relative;
   z-index: 2;
   margin-bottom: 20px;
+}
+
+.mision-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  min-height: 36px;
+  position: relative;
+  z-index: 2;
+}
+
+.mision-meta__chip {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: var(--title-font);
+  font-weight: 700;
+}
+
+.mision-meta__emoji {
+  font-size: 1.2rem;
 }
 
 .back-btn {

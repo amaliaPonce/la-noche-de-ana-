@@ -2,8 +2,7 @@
   <section class="panel home-panel">
     <div class="home-content">
       <h1 class="app-title">La Noche de Ana</h1>
-      <p class="app-body">Elige Cartas, Retos o el Botón del Caos.</p>
-      <p class="home-note">aqui una frase para ana.</p>
+      <p class="home-note">Lo que pasa en la despedida... ¡se queda en la despedida! 🤫💃</p>
       <div class="mode-grid">
         <button v-for="mode in modeButtons" :key="mode.value" type="button" class="mode-btn" :class="mode.value" @click="$emit('set-mode', mode.value)">
           {{ mode.label }}
@@ -213,7 +212,6 @@ defineEmits(['set-mode']);
   text-align: center;
   margin-bottom: 24px;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   font-weight: 600;
 }
 

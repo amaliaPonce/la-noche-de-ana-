@@ -9,11 +9,6 @@
       </div>
     </div>
 
-    <div class="reto-meta" v-if="retoMeta">
-      <span class="reto-meta__chip">{{ RETO_CATEGORY_LABELS[retoMeta.categoria] }}</span>
-      <span class="reto-meta__chip">{{ RETO_INTENSITY_LABELS[retoMeta.intensidad] }}</span>
-    </div>
-    
     <div class="card-container">
       <div class="reto-card" :class="{ 'reto-card--show': retoDisplay, 'animating': isAnimating }">
         <div class="card-content">
@@ -31,11 +26,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import {
-  RETOS,
-  RETO_CATEGORY_LABELS,
-  RETO_INTENSITY_LABELS
-} from '../data/retos.js';
+import { RETOS } from '../data/retos.js';
 
 const retoDeck = ref([]);
 const retoMeta = ref(null);
@@ -90,7 +81,6 @@ function nuevoReto() {
     retoDisplay.value = reto.texto;
     retoMeta.value = reto;
 
-    
     // Reset animation state next tick to trigger re-flow if needed or just remove class
     setTimeout(() => {
       isAnimating.value = false;
@@ -167,38 +157,6 @@ defineEmits(['back']);
 
 .back-btn:hover {
   opacity: 1;
-}
-
-.reto-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 0.95rem;
-  margin-bottom: 10px;
-  min-height: 32px; /* Prevent layout shift */
-}
-
-.reto-meta__chip {
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  padding: 6px 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.95);
-  color: #c2185b;
-  font-family: var(--title-font);
-  font-weight: 700;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.reto-meta__status {
-  font-weight: 600;
-  margin-left: 8px;
-  font-size: 0.9rem;
-  opacity: 0.9;
 }
 
 .card-container {
